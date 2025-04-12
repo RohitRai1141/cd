@@ -1,667 +1,179 @@
-ex1
-Ex No:01     INSTALL WIRESHARK AND EXPLORE THE VARIOUS PROTOCOLS 
-Date:     
-A. ANALYZE THE DIFFERENCE BETWEEN HTTP VS HTTPS 
-AIM: 
-To install Wireshark and explore the various protocols and analyze the 
-difference between HTTP and HTTPS. 
-PROCEDURE: 
-STEP 1: Download Wireshark for windows from the following link  
-https://www.wireshark.org/download.html 
-STEP 2: Now,install wireshark which is downloaded.After installation,open wireshark 
-STEP 3: Now, open the vulnerable webpage in which the packets have to be 
-captured and enter the details. 
- 
- 
- 
-STEP 4: Now, you can see the packets that are in transmission. 
- 
- 
- 
-STEP 5: You can filter the packets to the protocol needed by typing the protocol in 
-the filter option. Here, the filter is done to see only the HTTP packets. 
- 
- 
-STEP 6: Now, you can see the disadvantage of HTTP as the username and 
-password typed in the HTTP webpage and sent can be tracked using Wireshark. We 
-can see the username and the password typed are shown as key value pairs. 
-STEP 7: Let us try the same with HTTPS-enabled web page. 
-STEP 8: Now, you can see the packets transferred through HTTPS protocol . You 
-can filter it out using the IP address of the destination or by typing TLS. 
-STEP 9: You can go to the packet to see the description of the HTTPS packet. 
-It has the Handshake Protocol, which adds a layer of security to it. 
-And the data is encrypted for which the encrypted data is shown there. 
-You can also observe: 
-1. Client Hello traffic 
-2. Server Hello Traffic 
-3. Certificate Traffic 
-4. Key Exchange Traffic. 
-5. New Session Ticket Traffic 
-6. Encrypted Data Exchange. 
-So, by this we can see the difference between HTTP and HTTPS. 
-RESULT: 
-Thus, installing Wireshark and exploring the various protocols and analyze the 
-difference between HTTP and HTTPS has been done successfully. 
-Ex No:01b          
-Date:   
-AIM: 
-B. ANALYZE THE VARIOUS SECURITY MECHANISMS  
-EMBEDDED WITH DIFFERENT PROTOCOLS 
-To install Wireshark and explore the various protocols and analyze the various 
-security mechanisms embedded with different protocols. 
-PROCEDURE: 
-STEP 1: Check whether Wireshark is installed on your device by typing command:   
-Wireshark --version 
-STEP 2: Capture the Network traffic using the command: dumpcap -i <interface> -w 
-capture_file.pcap   Ctrl+C to stop. 
-STEP 3: Use tshark to Analyse specific protocols. 
-tshark -r capture_file.pcap -Y “ssl” 
-STEP 4: Now, Open Wireshark and open the file that you created and modified now. 
- 
- 
- 
- 
-STEP 5: In this way, we can get different protocols used and the descriptions of it by 
-double-clicking the packet. 
- 
-#To view HTTP and HTTPS packets, 
- 
-HTTP: 
- 
- 
- 
-HTTPS: 
- 
- 
- 
- 
- 
-DNS: 
-TCP: 
-RESULT : 
-Thus, installing Wireshark, exploring the various protocols, and analyzing the 
-various security mechanisms embedded with different protocols has been done 
-successfully.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-ex2
-<!DOCTYPE html> 
-<html> 
-<body> 
-<h1 style="text-align: center;color: red; font-family: 'Times New Roman', Times, 
-serif;">INPUT VALIDATION</h1> 
-<div style="display:flex;align-items:center;justify-content: center;height: 50vh;"> 
-<br><form> 
-<h4> USER NAME : </h4><input type="text" id="username" 
-name=""="username"> <br> 
-<h3> PASSWORD :</h3> <input type="password" id="password" 
-name="password"><br> 
-<button onclick="login()">LOGIN</button> 
-</form> 
-</div> 
-<script> 
-function login() { 
-var un = document.getElementById("username").value.trim(); 
-var pass = document.getElementById("password").value.trim(); 
-var usernamePattern = /^[A-Za-z]{1,20}$/; 
-var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/; 
-if (!usernamePattern.test(un)) { alert("Wrong username"); } 
-else if (!passwordPattern.test(pass)) { alert("Wrong Password"); } 
-else alert("Login Successful"); 
-}</script> 
-</body> 
-</html> 
-
-
-
-
-ex3
-Ex No :03           
-Date:  
-AIM: 
-To install the OWASP ZAP tool and analyze the vulnerabilities for a website. 
-PROCEDURE: 
-Step 1: Launch the OWASP Zap tool. 
-Step 2: Select start. ZAP GUI will open. Select Automated Scan. 
- 
- 
- 
-Step 3: Select the URL to attack: 
-a. The URL to be tested has to be sample websites. 
-b. URL which doesn’t provide permissions for testing shouldn’t be used. 
-c. Some same website that can be used 
- http://lab.awh.zdresearch.com/chapter2/mutillidae/index.p
- hp?page=l ogin.php 
- http://www.vulnweb.com/ 
- 
-Step 4: Paste the URL to attack and Click on “Attack” button 
-Step 5: Spider the URL. 
-Step 6: Once Spidering is done, Active scan is done automatically 
- 
- 
- 
-Step 7: Click on the “Alerts” tab to view the vulnerabilities 
- 
- 
-Step 8: Investigate each vulnerability 
-a. Click on each vulnerability to get a detailed information. 
-b. Verify and understand the nature and potential impact of each issue. 
-Step 9: Generate the report 
-a. In the “Reports” tab, select “Generate Report” 
-b. The following screen appears. Select the “Scope” tab, select the report 
-title,report name, and directory and Click on the “Generate Report” button. 
-c. A detailed scanning report will be generated. 
-RESULT : 
-Thus the vulnerabilities are identified using OWASP ZAP tool. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-ex4
-Step 1: Install Dependencies
-Ensure you have Python and Flask installed on your system. If not, install them using:
-
-sh
-Copy
-Edit
-pip install flask
-Step 2: Create a Flask App
-Create a new Python file named app.py and add the following code:
-
-python
-Copy
-Edit
-from flask import Flask, jsonify, request
-
-app = Flask(__name__)
-
-# Sample data (in-memory storage)
-users = [
-    {"id": 1, "name": "Alice"},
-    {"id": 2, "name": "Bob"}
-]
-
-# Home route
-@app.route('/')
-def home():
-    return "Welcome to the Simple REST API!"
-
-# GET all users
-@app.route('/users', methods=['GET'])
-def get_users():
-    return jsonify(users)
-
-# GET a user by ID
-@app.route('/users/<int:user_id>', methods=['GET'])
-def get_user(user_id):
-    user = next((user for user in users if user["id"] == user_id), None)
-    if user:
-        return jsonify(user)
-    return jsonify({"message": "User not found"}), 404
-
-# POST (Create a new user)
-@app.route('/users', methods=['POST'])
-def create_user():
-    data = request.get_json()
-    new_user = {
-        "id": len(users) + 1,
-        "name": data["name"]
-    }
-    users.append(new_user)
-    return jsonify(new_user), 201
-
-# PUT (Update user details)
-@app.route('/users/<int:user_id>', methods=['PUT'])
-def update_user(user_id):
-    data = request.get_json()
-    user = next((user for user in users if user["id"] == user_id), None)
-    if user:
-        user["name"] = data["name"]
-        return jsonify(user)
-    return jsonify({"message": "User not found"}), 404
-
-# DELETE (Remove a user)
-@app.route('/users/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    global users
-    users = [user for user in users if user["id"] != user_id]
-    return jsonify({"message": "User deleted"}), 200
-
-if __name__ == '__main__':
-    app.run(debug=True)
-Step 3: Run the Flask App
-Save the app.py file and run it using:
-
-sh
-Copy
-Edit
-python app.py
-By default, Flask will run on http://127.0.0.1:5000/.
-
-Step 4: Test APIs Using Postman
-Open Postman and create a new request.
-
-Test the API Endpoints:
-
-GET all users:
-
-Method: GET
-
-URL: http://127.0.0.1:5000/users
-
-GET a single user by ID:
-
-Method: GET
-
-URL: http://127.0.0.1:5000/users/1
-
-POST a new user:
-
-Method: POST
-
-URL: http://127.0.0.1:5000/users
-
-Body (JSON format):
-
-json
-Copy
-Edit
-{
-    "name": "Charlie"
+Use Case Diagram
+@startuml
+actor Customer
+actor Admin
+
+rectangle "Recycle Intelligence Hub" {
+  Customer --> (Login)
+  Admin --> (Login)
+  
+  Customer --> (Scan Barcode)
+  Customer --> (Upload Image)
+  Customer --> (Search for Recyclability Info)
+  Customer --> (Locate Facilities)
+  Customer --> (Track Recycling Habits)
+
+  Admin --> (Manage Recyclability Data)
+  Admin --> (Facilities Management)
+  Admin --> (System Reports)
+  Admin --> (User Accounts)
+
+  (Search for Recyclability Info) ..> (Scan Barcode) : <<include>>
+  (Search for Recyclability Info) ..> (Upload Image) : <<include>>
 }
-PUT (Update a user):
+@enduml
 
-Method: PUT
 
-URL: http://127.0.0.1:5000/users/1
 
-Body (JSON format):
 
-json
-Copy
-Edit
-{
-    "name": "Alice Updated"
+✅ Exercise 4: Class Diagram (for product scanner feature)
+plantuml
+Copy code
+@startuml
+class User {
+  +userID: String
+  +name: String
+  +email: String
+  +login()
 }
-DELETE a user:
 
-Method: DELETE
-
-URL: http://127.0.0.1:5000/users/1
-
-Step 5: Verify API Responses
-Check the JSON responses returned by each API request in Postman.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-ex 6 spoofing 
-✅ How to Perform Email Spoofing on Windows
-🔧 Requirements:
-Python (Install from python.org)
-
-Git for Windows (Download Git)
-
-Command Prompt / PowerShell
-
-Optional: Terminus or Windows Terminal
-
-✅ Step-by-step Setup
-Step 1: Install Git and Clone the Tool
-Open Command Prompt or PowerShell, then run:
-
-bash
-Copy
-Edit
-git clone https://github.com/sighook/spoofcheck.git
-cd spoofcheck
-Step 2: Install Python and Required Modules
-Make sure Python is installed. Then, install required dependencies:
-
-bash
-Copy
-Edit
-pip install -r requirements.txt
-If pip isn't recognized, make sure Python was installed with the Add to PATH option enabled.
-
-✅ Step 3: Check for Vulnerability
-Use this command to check if a domain is vulnerable:
-
-bash
-Copy
-Edit
-python spoofcheck.py licet.ac.in
-This will show whether SPF, DKIM, and DMARC records are properly configured.
-
-✅ Step 4: Create HTML Spoof Email Template
-Use any text editor (like Notepad++, VS Code, or Sublime Text) to create your HTML template. You already have the sample in your question.
-
-Save it as: spoof_email.html
-
-✅ Step 5: Send Spoofed Email (Windows-Friendly Tools)
-There are 3 Windows-compatible options:
-
-🔹 Option A: Use a Free Tool Like [SendEmail.exe]
-Download: SendEmail Windows Binary
-
-Use the following syntax:
-
-bash
-Copy
-Edit
-sendEmail.exe -f attacker@spoof.com -t victim@example.com -u "Security Alert!" -m "Check your login!" -s smtp.server.com:587 -xu your_email -xp your_password -o message-file=spoof_email.html
-⚠️ Warning: Some providers block spoof emails. Use tools like smtp2go.com or mailtrap.io for safe testing.
-
-🔹 Option B: Use Python to Send Email
-Create a script like this:
-
-python
-Copy
-Edit
-import smtplib
-from email.mime.text import MIMEText
-
-with open("spoof_email.html", "r") as file:
-    html = file.read()
-
-msg = MIMEText(html, 'html')
-msg['Subject'] = 'Security Notification'
-msg['From'] = 'admin@fake-licet.in'
-msg['To'] = 'victim@example.com'
-
-server = smtplib.SMTP('smtp.gmail.com', 587)
-server.starttls()
-server.login("youremail@gmail.com", "yourpassword")  # Use app password for Gmail
-server.send_message(msg)
-server.quit()
-✅ Step 6: Done!
-Check the recipient inbox. If your spoofed mail arrives without getting flagged, the domain is vulnerable.
-
-💡 Important Notes
-This lab is only for educational purposes and must not be used maliciously.
-
-Modern email providers have DMARC, SPF, DKIM to block spoofing. Use domains without these protections for safe lab testing.
-
-Tools like mailtrap.io allow safe email testing without affecting real users.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1. Set Up a Local Server
-Since PHP is a server-side language, you need a web server like XAMPP, WAMP, or a built-in PHP server to run the script.
-
-Option 1: Using XAMPP or WAMP
-Install XAMPP (or WAMP) if you haven't already.
-
-Place your PHP file inside the htdocs folder (for XAMPP) or www folder (for WAMP).
-
-Example: C:\xampp\htdocs\form.php
-
-Start Apache Server using XAMPP/WAMP Control Panel.
-
-Open a web browser and go to:
-
-arduino
-Copy
-Edit
-http://localhost/form.php
-Option 2: Using PHP’s Built-in Server
-Open Command Prompt (Windows) or Terminal (Mac/Linux).
-
-Navigate to the folder where your form.php is saved:
-
-sh
-Copy
-Edit
-cd path/to/your/php/file
-Start the PHP server:
-
-sh
-Copy
-Edit
-php -S localhost:8000
-Open your browser and visit:
-
-bash
-Copy
-Edit
-http://localhost:8000/form.php
-2. Add a Simple HTML Form
-Your PHP script processes form data, so you need an HTML form to send data:
-
-Create a file index.html with the following content:
-
-html
-Copy
-Edit
-<!DOCTYPE html>
-<html>
-<head>
-    <title>PHP Form</title>
-</head>
-<body>
-    <form action="form.php" method="post">
-        Name: <input type="text" name="name" required><br>
-        Email: <input type="email" name="email" required><br>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
-3. How It Works
-When you open index.html in a browser and submit the form, it sends a POST request to form.php.
-
-form.php:
-
-Receives name and email from the form.
-
-Displays the values for debugging.
-
-Appends the data to data.txt in C:\Users\YourUsername\Documents\.
-
-If everything works, data.txt will contain:
-
-makefile
-Copy
-Edit
-Name: John Doe
-Email: johndoe@example.com
-Troubleshooting
-If data.txt is not updating, check:
-
-The file path (C:\\Users\\YourUsername\\Documents\\data.txt).
-
-If PHP has permission to write to the file.
-
-Enable error_reporting(E_ALL); in php.ini.
-
-Let me know if you need further clarification! 🚀
-
-
-
-
-
-
-inpython:
-1. Install Flask
-First, install Flask if you haven't already:
-
-sh
-Copy
-Edit
-pip install flask
-2. Create the Flask App
-Create a Python file called app.py and add the following code:
-
-python
-Copy
-Edit
-from flask import Flask, request, render_template
-
-app = Flask(__name__)
-
-# File path to save data (change as needed)
-FILE_PATH = "C:\\Users\\YourUsername\\Documents\\data.txt"
-
-@app.route("/", methods=["GET", "POST"])
-def form():
-    if request.method == "POST":
-        name = request.form.get("name")
-        email = request.form.get("email")
-
-        if name and email:
-            # Prepare the data to save
-            data = f"Name: {name}\nEmail: {email}\n\n"
-
-            try:
-                # Write data to file
-                with open(FILE_PATH, "a") as file:
-                    file.write(data)
-                message = "Data saved successfully!"
-            except Exception as e:
-                message = f"Failed to save data: {e}"
-
-            return f"{message} <br><a href='/'>Go Back</a>"
-        else:
-            return "Missing name or email. <br><a href='/'>Go Back</a>"
-
-    return render_template("form.html")
-
-if __name__ == "__main__":
-    app.run(debug=True)
-3. Create the HTML Form
-Create a folder named templates in the same directory as app.py. Inside templates, create a file called form.html and add the following code:
-
-html
-Copy
-Edit
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Flask Form</title>
-</head>
-<body>
-    <h2>Enter Your Details</h2>
-    <form action="/" method="post">
-        Name: <input type="text" name="name" required><br>
-        Email: <input type="email" name="email" required><br>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
-4. Running the Flask App
-To start the server, open a terminal in the folder containing app.py and run:
-
-sh
-Copy
-Edit
-python app.py
-This will start a local server at:
-
-cpp
-Copy
-Edit
-http://127.0.0.1:5000/
-5. How It Works
-Open http://127.0.0.1:5000/ in a web browser.
-
-Enter your name and email, then click "Submit."
-
-The server receives the data, appends it to data.txt, and displays a success message.
-
-If successful, data.txt will contain:
-
-makefile
-Copy
-Edit
-Name: John Doe
-Email: johndoe@example.com
-Troubleshooting
-If data isn’t saving, check:
-
-The file path (C:\\Users\\YourUsername\\Documents\\data.txt).
-
-That Flask has permission to write to the file.
-
-For debugging, use print(name, email) inside the POST block.
-
-Now your Flask app is ready! 🚀 Let me know if you need any modifications. 😊
-
-
-
-
+class Scanner {
+  +scanBarcode(): String
+  +uploadImage(): Image
+}
+
+class Product {
+  +productID: String
+  +name: String
+  +recyclable: Boolean
+}
+
+class RecyclingInfo {
+  +recyclabilityDetails: String
+  +locationList: List
+}
+
+class Admin {
+  +manageProduct()
+  +manageFacility()
+  +generateReports()
+}
+
+User --> Scanner
+Scanner --> Product
+Product --> RecyclingInfo
+Admin --> Product
+Admin --> RecyclingInfo
+@enduml
+
+
+
+✅ Exercise 5: Sequence Diagram (Product Scanning Flow)
+plantuml
+@startuml
+actor User
+participant App
+participant Scanner
+participant System
+database DB
+
+User -> App : Open App
+User -> App : Scan Barcode
+App -> Scanner : Capture Barcode
+Scanner -> System : Send barcode data
+System -> DB : Fetch product details
+DB --> System : Return product data
+System -> App : Send product info
+App -> User : Display product info
+@enduml
+
+
+
+✅ Exercise 5: Sequence Diagram (Recycling Process Flow)
+plantuml
+@startuml
+actor User
+participant App
+participant System
+database DB
+
+User -> App : Select recycling option
+App -> System : Send recycling request
+System -> DB : Update recycling records
+DB --> System : Confirm update
+System -> App : Send confirmation
+App -> User : Show confirmation message
+@enduml
+
+
+
+✅ Exercise 5: Collaboration Diagram (Scanner Feature)
+plantuml
+@startuml
+object User
+object App
+object Scanner
+object System
+object DB
+
+User -> App : openApp()
+App -> Scanner : scanBarcode()
+Scanner -> System : sendBarcode()
+System -> DB : fetchDetails()
+DB --> System : returnDetails()
+System -> App : sendInfo()
+App -> User : displayInfo()
+@enduml
+
+
+
+
+Exercise 6: Statechart Diagram (Scanner Feature)
+@startuml
+[*] --> AppOpened
+
+AppOpened --> Scanning : ScanBarcode
+Scanning --> Recognizing : BarcodeDetected
+Recognizing --> FetchingData : ValidCode
+Recognizing --> ErrorState : InvalidCode
+
+FetchingData --> ShowingDetails : DataFound
+ErrorState --> Scanning : Retry
+ShowingDetails --> [*]
+@enduml
+
+
+
+
+✅ Exercise 6: Activity Diagram (Scanner Workflow)
+plantuml
+@startuml
+start
+
+:Open App;
+:Scan Barcode;
+
+if (Scan Success?) then (yes)
+  :Recognize Barcode;
+  :Fetch Product Details;
+  :Display Product Info;
+  
+  if (Recycle?) then (yes)
+    :Select Option;
+    :Confirm Recycle;
+    :Update Records;
+    :Show Confirmation;
+  else (no)
+    stop
+  endif
+
+else (no)
+  :Show Error;
+  :Retry Scan;
+endif
+
+stop
+@enduml
 
 
 
