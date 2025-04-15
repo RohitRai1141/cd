@@ -1,180 +1,274 @@
-Use Case Diagram
-@startuml
-actor Customer
-actor Admin
-
-rectangle "Recycle Intelligence Hub" {
-  Customer --> (Login)
-  Admin --> (Login)
-  
-  Customer --> (Scan Barcode)
-  Customer --> (Upload Image)
-  Customer --> (Search for Recyclability Info)
-  Customer --> (Locate Facilities)
-  Customer --> (Track Recycling Habits)
-
-  Admin --> (Manage Recyclability Data)
-  Admin --> (Facilities Management)
-  Admin --> (System Reports)
-  Admin --> (User Accounts)
-
-  (Search for Recyclability Info) ..> (Scan Barcode) : <<include>>
-  (Search for Recyclability Info) ..> (Upload Image) : <<include>>
-}
-@enduml
+ex3git init
+git config --global --user.name "ssuruthi560"
+git config --global --user.email "suruthi.26csb@licet.ac.in"
+git config --global --list
+git add "first.txt"
+git add first.txt
+git commit -m "issue2"
+git status
+git log
+git branch -m main
+git remote add origin "https://github.com/ssuruthi560/demo24.git"
+git push -m origin "branch name"
+git checkout -b "new branch name"
+git switch -c "new branch name"
+git checkout "branch name"
+git switch "branch name"
+git pull origin "branch name"
+git merge "source branch name"
+git tag "tag name"
+git tag -a "tag name" -m "message"
+git push origin tag name
+git merge <source_branch>
 
 
 
 
-✅ Exercise 4: Class Diagram (for product scanner feature)
-plantuml
-Copy code
-@startuml
-class User {
-  +userID: String
-  +name: String
-  +email: String
-  +login()
-}
-
-class Scanner {
-  +scanBarcode(): String
-  +uploadImage(): Image
-}
-
-class Product {
-  +productID: String
-  +name: String
-  +recyclable: Boolean
-}
-
-class RecyclingInfo {
-  +recyclabilityDetails: String
-  +locationList: List
-}
-
-class Admin {
-  +manageProduct()
-  +manageFacility()
-  +generateReports()
-}
-
-User --> Scanner
-Scanner --> Product
-Product --> RecyclingInfo
-Admin --> Product
-Admin --> RecyclingInfo
-@enduml
+ex4
+choco install maven
+mvn archetype:generate -DgroupId=com.example -DartifactId=myproject -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+mvn clean install -DskipTests
+mvn spring-boot:run
+mvn compile
+mvn test
+mvn package
+mvn install
+mvn clean
+mvn dependency:tree
 
 
 
-✅ Exercise 5: Sequence Diagram (Product Scanning Flow)
-plantuml
-@startuml
-actor User
-participant App
-participant Scanner
-participant System
-database DB
+ex4
+gradle init
+gradle build
+gradle build -x test
+gradle run
+gradle bootRun
 
-User -> App : Open App
-User -> App : Scan Barcode
-App -> Scanner : Capture Barcode
-Scanner -> System : Send barcode data
-System -> DB : Fetch product details
-DB --> System : Return product data
-System -> App : Send product info
-App -> User : Display product info
-@enduml
-
-
-
-✅ Exercise 5: Sequence Diagram (Recycling Process Flow)
-plantuml
-@startuml
-actor User
-participant App
-participant System
-database DB
-
-User -> App : Select recycling option
-App -> System : Send recycling request
-System -> DB : Update recycling records
-DB --> System : Confirm update
-System -> App : Send confirmation
-App -> User : Show confirmation message
-@enduml
-
-
-
-✅ Exercise 5: Collaboration Diagram (Scanner Feature)
-plantuml
-@startuml
-object User
-object App
-object Scanner
-object System
-object DB
-
-User -> App : openApp()
-App -> Scanner : scanBarcode()
-Scanner -> System : sendBarcode()
-System -> DB : fetchDetails()
-DB --> System : returnDetails()
-System -> App : sendInfo()
-App -> User : displayInfo()
-@enduml
+gradle tasks
+gradle clean
+gradle compileJava
+gradle test
+gradle assemble
+gradle dependencies
 
 
 
 
-Exercise 6: Statechart Diagram (Scanner Feature)
-@startuml
-[*] --> AppOpened
-
-AppOpened --> Scanning : ScanBarcode
-Scanning --> Recognizing : BarcodeDetected
-Recognizing --> FetchingData : ValidCode
-Recognizing --> ErrorState : InvalidCode
-
-FetchingData --> ShowingDetails : DataFound
-ErrorState --> Scanning : Retry
-ShowingDetails --> [*]
-@enduml
 
 
+ex8 ansible
+1. Ansible Installation
+
+sudo apt update
+sudo apt install software-properties-common
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt install ansible
+
+🔁 If not in sudoers list:
+
+su
+sudo usermod -aG sudo "username"
+su "username"
+
+✅ 2. Verify Ansible Installation
+
+ansible --version
+
+🔁 Fix UTF-8 Encoding Issue:
+
+sudo nano /etc/default/locale
+
+Edit content:
+
+LANG="en_US.UTF-8"
+LC_CTYPE="en_US.UTF-8"
+
+Or run:
+
+sudo update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
+
+✅ 3. Create SSH Key
+
+ssh-keygen -t rsa -C "kabilantm default"
+ls -la .ssh
+cat .ssh/id_rsa.pub
+cat .ssh/id_rsa
+
+✅ 4. Copy SSH Key to Server
+
+ssh-copy-id -i ~/.ssh/id_rsa.pub "ipaddress"
+
+✅ 5. Test SSH Key
+
+ssh -i ~/.ssh/"keyname" "ipaddress"
+
+🔁 Fix Connection Refused (port 22):
+
+sudo apt install openssh-server
+sudo systemctl restart sshd
+
+✅ 6. Connect to Server
+
+ssh "ipaddress"
+
+✅ 7. Create Inventory File
+
+sudo nano inventory
+
+Content:
+
+[web]
+192.168.1.7 ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_user=kabilan
+
+✅ 8. Test Ansible Connection
+
+ansible all --key-file ~/.ssh/id_rsa -i inventory -m ping
+
+🔁 Fix permission denied error:
+
+chmod 600 ~/.ssh/id_rsa
+
+Alternative inventory test:
+
+ansible all -i inventory -m ping
+
+✅ 9. Create & Run Playbook
+
+Create:
+
+nano playbook.yml
+
+Example content:
+
+---
+- name: Test playbook
+  hosts: web
+  tasks:
+    - name: Ping the server
+      ping:
+
+Run:
+
+ansible-playbook -i inventory playbook.yml
 
 
-✅ Exercise 6: Activity Diagram (Scanner Workflow)
-plantuml
-@startuml
-start
-
-:Open App;
-:Scan Barcode;
-
-if (Scan Success?) then (yes)
-  :Recognize Barcode;
-  :Fetch Product Details;
-  :Display Product Info;
-  
-  if (Recycle?) then (yes)
-    :Select Option;
-    :Confirm Recycle;
-    :Update Records;
-    :Show Confirmation;
-  else (no)
-    stop
-  endif
-
-else (no)
-  :Show Error;
-  :Retry Scan;
-endif
-
-stop
-@enduml
 
 
+
+
+
+
+ansible playbook
+✅ 1. Verify Ansible Installation and Connection
+
+ansible --version
+ansible all -i inventory -m ping
+
+✅ 2. Create Inventory File
+
+sudo nano inventory
+
+Content:
+
+[web]
+127.0.0.1 ansible_connection=local
+
+✅ 3. Create Ansible Playbook File
+
+nano web_setup.yml
+
+Content of web_setup.yml:
+
+---
+- name: Setup simple web server
+  hosts: web
+  become: yes
+  tasks:
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+
+    - name: Install Apache web server
+      apt:
+        name: apache2
+        state: present
+
+    - name: Start and enable Apache
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Create a simple index.html
+      copy:
+        dest: /var/www/html/index.html
+        content: "<h1>Hello from Ansible Web Server</h1>"
+
+✅ 4. Run the Playbook
+
+ansible-playbook -i inventory web_setup.yml
+
+✅ 5. Verify the Web Server
+
+Open your browser and go to:
+
+http://localhost
+
+
+
+
+
+
+
+
+
+
+azure ansable 
+Step 1: No code (Azure VM setup via GUI)
+
+Launch a VM from https://portal.azure.com
+✅ Step 2: Connect to VM and Install Jenkins
+
+Install Java (Pre-requisite):
+
+sudo apt update
+sudo apt install openjdk-17-jre
+
+Install Jenkins:
+
+curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+sudo apt-get update
+sudo apt-get install jenkins
+
+✅ Step 3: Access Jenkins
+
+Go to this URL in your browser:
+
+http://<VM-public-ip>:8080
+
+✅ Step 4: Unlock Jenkins
+
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+Paste the output in the Jenkins web interface to unlock.
+✅ Step 5–7: Jenkins Web UI steps
+
+These steps are done inside the Jenkins interface:
+
+    Click New Item → Enter job name → Select Freestyle project
+
+    In Build Steps, select Execute Shell and input any shell script, e.g.:
+
+echo "Hello from Jenkins!"
+
+    Click Save
+
+    Click Build Now
+
+    Click on the build number → Console Output to see result
 
 
