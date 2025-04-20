@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+        }
+        form {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: red;">INPUT VALIDATION</h1>
+
+    <div style="display: flex; align-items: center; justify-content: center; height: 50vh;">
+        <form>
+            <h4>USER NAME:</h4>
+            <input type="text" id="username" name="username" placeholder="Letters only (1-20 chars)">
+
+            <h3>PASSWORD:</h3>
+            <input type="password" id="password" name="password" placeholder="6-15 chars, letters & numbers">
+
+            <button type="button" onclick="validateLogin()">LOGIN</button>
+        </form>
+    </div>
+
+    <script>
+        function validateLogin() {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            const usernamePattern = /^[A-Za-z]{1,20}$/;
+            const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/;
+
+            if (!usernamePattern.test(username)) {
+                alert("❌ Username must be 1-20 letters only!");
+                return false;
+            }
+
+            if (!passwordPattern.test(password)) {
+                alert("❌ Password must be 6-15 chars with letters & numbers!");
+                return false;
+            }
+
+            alert("✅ Login Successful!");
+            return true;
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Experiment 4: Creating a Simple REST API in Python
+pip install flask flask-restful
+Step 2: Create the Flask API
+    Save the following code as app.py:
+    from flask import Flask, jsonify, request
+    app = Flask(__name__)
+    tasks = [
+        {"id": 1, "title": "Task 1", "description": "This is task 1", "done": False},
+        {"id": 2, "title": "Task 2", "description": "This is task 2", "done": False},
+        {"id": 3, "title": "Task 3", "description": "This is task 3", "done": False}
+    ]
+    # GET all tasks
+    @app.route('/tasks', methods=['GET'])
+    def get_tasks():
+        return jsonify({"tasks": tasks})
+
+    # GET single task
+    @app.route('/tasks/<int:task_id>', methods=['GET'])
+    def get_task(task_id):
+        task = next((t for t in tasks if t['id'] == task_id), None)
+        return jsonify({"task": task}) if task else ("Task not found", 404)
+
+    # POST new task
+    @app.route('/tasks', methods=['POST'])
+    def create_task():
+        new_task = {
+            "id": len(tasks) + 1,
+            "title": request.json['title'],
+            "description": request.json['description'],
+            "done": False
+        }
+        tasks.append(new_task)
+        return jsonify({"message": "Task created!", "task": new_task}), 201
+    # PUT update task
+    @app.route('/tasks/<int:task_id>', methods=['PUT'])
+    def update_task(task_id):
+        task = next((t for t in tasks if t['id'] == task_id), None)
+        if task:
+            task.update(request.json)
+            return jsonify({"message": "Task updated!", "task": task})
+        return ("Task not found", 404)
+    # DELETE task
+    @app.route('/tasks/<int:task_id>', methods=['DELETE'])
+    def delete_task(task_id):
+        global tasks
+        tasks = [t for t in tasks if t['id'] != task_id]
+        return jsonify({"message": "Task deleted!"})
+
+    if __name__ == '__main__':
+        app.run(debug=True)
+
+to start:
+python app.py
+
+   
+
+    Method: GET
+    URL: http://127.0.0.1:5000/tasks
+
+
+    Method: GET
+    URL: http://127.0.0.1:5000/tasks/1
+
+
+
+    Method: POST
+    URL: http://127.0.0.1:5000/tasks
+    json
+    {
+      "title": "New Task",
+      "description": "This is a new task"
+    }
+
+Method: PUT
+    URL: http://127.0.0.1:5000/tasks/1
+    json
+    {
+      "title": "Updated Task",
+      "done": true
+    }
+DELETE
+    URL: http://127.0.0.1:5000/tasks/1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
