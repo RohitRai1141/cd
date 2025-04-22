@@ -1,5 +1,85 @@
 https://github.com/Manimaran-M3/Demmo.git
 
+
+
+
+
+
+
+1. Verify MySQL/MariaDB is running (Windows)
+cmd
+sc query MySQL
+or for MariaDB:
+
+cmd
+sc query MariaDB
+Look for "STATE" showing "RUNNING"
+
+2. Start MySQL/MariaDB service if stopped
+cmd
+net start MySQL
+or for MariaDB:
+
+cmd
+net start MariaDB
+3. Check connection manually
+cmd
+mysql -u root -p
+(Enter your password Password@123 when prompted)
+
+spring connection 
+4. Run Spring Boot application
+cmd
+mvnw.cmd spring-boot:run
+Additional Windows-specific tips:
+If services aren't found:
+
+Check service names in Services Manager (services.msc)
+
+Common service names:
+
+MySQL: "MySQL80" or "MySQL57"
+
+MariaDB: "MariaDB"
+
+Alternative connection check:
+
+cmd
+mysqlshow -u root -p
+Environment variables:
+Ensure MySQL binaries are in your PATH:
+
+cmd
+set PATH=%PATH%;C:\Program Files\MySQL\MySQL Server 8.0\bin
+(Adjust path to your MySQL/MariaDB installation)
+
+If you get "mysql command not found":
+
+Navigate to MySQL bin directory first:
+
+cmd
+cd "C:\Program Files\MySQL\MySQL Server 8.0\bin"
+mysql -u root -p
+For MariaDB installed via XAMPP/WAMP:
+
+cmd
+cd C:\xampp\mysql\bin
+mysql.exe -u root -p
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 git init
 touch README.md
 git add README.md
