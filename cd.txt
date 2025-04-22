@@ -1,5 +1,20 @@
 https://github.com/Manimaran-M3/Demmo.git
 
+git init
+touch README.md
+git add README.md
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/RohitRai1141/dc1.git
+git remote set-url origin https://github.com/RohitRai1141/dc1.git
+git remote -v
+git push -u origin main
+git pull origin main --rebase
+git push --force origin main
+rm -rf .git
+
+
 ex3git init
 git config --global --user.name "ssuruthi560"
 git config --global --user.email "suruthi.26csb@licet.ac.in"
