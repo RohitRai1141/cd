@@ -1,4 +1,4 @@
-https://github.com/Manimaran-M3/Demmo.git
+sohttps://github.com/Manimaran-M3/Demmo.git
 
 
 
@@ -494,3 +494,174 @@ Then run:
 gradle createJar
 Output JAR will be in: build/libs/
 
+
+
+
+
+Install Gradle on Windows
+cmd
+choco install gradle -y  # Using Chocolatey
+OR Download manually, extract, and add bin to PATH.
+
+Verify:
+
+cmd
+gradle -v
+2. Create Project
+cmd
+gradle init --type java-application
+cd <project-name>
+3. Project Structure
+login-demo-gradle/
+├── src/
+│   ├── main/
+│   │   ├── java/com/example/
+│   │   │   ├── config/
+│   │   │   ├── controller/
+│   │   │   ├── model/
+│   │   │   ├── repository/
+│   │   │   └── LoginDemoApplication.java
+│   │   └── resources/
+│   │       ├── static/
+│   │       ├── templates/
+│   │       └── application.properties
+│   └── test/ (tests)
+└── build.gradle
+4. build.gradle Configuration
+groovy
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.5'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    
+    // Optional Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+5. Database Setup
+MySQL Commands (same as Maven version):
+
+sql
+CREATE DATABASE demo_db;
+USE demo_db;
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL
+);
+INSERT INTO users VALUES (1, 'admin', 'admin123');
+application.properties (same as Maven):
+
+properties
+spring.datasource.url=jdbc:mysql://localhost:3306/demo_db
+spring.datasource.username=root
+spring.datasource.password=yourpassword
+spring.jpa.hibernate.ddl-auto=update
+spring.thymeleaf.cache=false
+6. MVC Components
+Entity (User.java)
+java
+package com.example.model;
+
+import jakarta.persistence.*;
+
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String username;
+    private String password;
+    
+    // Getters and Setters
+}
+Repository (UserRepository.java)
+java
+package com.example.repository;
+
+import com.example.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByUsername(String username);
+}
+Controller (LoginController.java)
+java
+package com.example.controller;
+
+import com.example.model.User;
+import com.example.repository.UserRepository;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+public class LoginController {
+    
+    private final UserRepository userRepo;
+
+    public LoginController(UserRepository userRepo) {
+        this.userRepo = userRepo;
+    }
+
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam String username, 
+                       @RequestParam String password, 
+                       Model model) {
+        User user = userRepo.findByUsername(username);
+        if (user != null && user.getPassword().equals(password)) {
+            return "redirect:/welcome";
+        }
+        model.addAttribute("error", "Invalid credentials");
+        return "login";
+    }
+}
+Thymeleaf Template (login.html)
+html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form th:action="@{/login}" method="post">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+        <p th:if="${error}" th:text="${error}" style="color:red"></p>
+    </form>
+</body>
+</html>
+7. Run the Application
+cmd
+gradle bootRun
+Access: http://localhost:8080/login
+Test
+
+New chat
+Message DeepSeek
