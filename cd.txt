@@ -373,5 +373,124 @@ echo "Hello from Jenkins!"
 
 
 
+Here is **all the Gradle-related code and commands** extracted directly from the file:
 
+---
+
+### **Gradle Installation and Setup**
+1. **Download Gradle:**
+   - Visit: [https://gradle.org/install/](https://gradle.org/install/)
+   - Download the **"Complete" distribution ZIP file**
+
+2. **Extract Gradle ZIP File:**
+   - Right-click on ZIP → "Extract All"
+
+3. **Set Environment Variables:**
+   - System Properties → Advanced system settings → Environment Variables
+   - Under "System variables", edit the **Path** and add Gradle's `bin` path
+
+4. **Verify Gradle Installation:**
+```bash
+gradle -v
+```
+
+---
+
+### **Initialize a Gradle Project**
+```bash
+gradle init
+```
+- Choose project type:
+  - `application` for Java application
+  - `library`, `groovy-library`, or `scala-library` for others
+- Provide project name
+- Configure project (default or customized)
+
+---
+
+### **Build and Run the Project**
+```bash
+gradle build
+gradle run
+```
+
+---
+
+### **Configure `build.gradle` to Create JAR File**
+```groovy
+plugins {
+    id 'java'
+}
+
+task createJar(type: Jar) {
+    from sourceSets.main.output
+    archiveFileName = "my-project.jar"
+}
+```
+
+---
+
+### **Generate the JAR**
+```bash
+gradle createJar
+```
+
+- Output will be in: `build/libs/`
+
+---
+
+Let me know if you want me to generate a working sample project structure using this Gradle setup.
+
+
+
+
+
+
+
+
+ChatGPT
+You said:
+EX-1,3,4,5.pdf
+PDF
+Give the code for gradel quickly all code for gradel 
+ChatGPT said:
+Here's a quick summary of all the code and commands for Gradle installation and project setup from your file:
+
+1. Install Gradle (Windows)
+Download: https://gradle.org/install/
+
+Extract the ZIP file.
+
+Set environment variables:
+
+Go to System Properties → Environment Variables
+
+Add the Gradle bin path to the Path variable
+
+2. Verify Installation
+gradle -v
+3. Initialize a Gradle Project
+gradle init
+Choose: application / library / groovy-library / scala-library
+
+Set project name and configuration
+
+4. Build and Run the Project
+gradle build
+gradle run
+5. Create a JAR File
+Make sure this is in your build.gradle:
+
+plugins {
+    id 'java'
+}
+
+task createJar(type: Jar) {
+    from sourceSets.main.output
+    archiveFileName = "my-project.jar"
+}
+Then run:
+
+gradle createJar
+Output JAR will be in: build/libs/
 
