@@ -262,3 +262,419 @@ def lambda_handler(event, context):
         }
     ]
 }
+
+
+
+
+
+public class Table {
+
+    public static void main(String[] args) {
+        String[][] tableData = {
+                {"Username", "Password"},
+                {"Alice", "helene@123"},
+                {"Bob", "bob@123"},
+                {"Charlie", "char@231"}
+        };
+
+        // Calculate maximum width for each column
+        int[] columnWidths = new int[tableData[0].length];
+        for (String[] row : tableData) {
+            for (int i = 0; i < row.length; i++) {
+                columnWidths[i] = Math.max(columnWidths[i], row[i].length());
+            }
+        }
+
+        // Print table with separator between columns
+        for (int i = 0; i < tableData.length; i++) {
+            // Print each row with proper formatting, separating the username and password
+            if (i == 0) {
+                // Header row with separator line between columns
+                System.out.printf("%-" + (columnWidths[0] + 2) + "s | %-" + (columnWidths[1] + 2) + "s\n",
+                        tableData[i][0], tableData[i][1]);
+                // Print separator line between columns
+                for (int j = 0; j < columnWidths[0] + 2; j++) {
+                    System.out.print("-");
+                }
+                System.out.print(" | ");
+                for (int j = 0; j < columnWidths[1] + 2; j++) {
+                    System.out.print("-");
+                }
+                System.out.println();
+            } else {
+                // Data rows with username and password
+                System.out.printf("%-" + (columnWidths[0] + 2) + "s | %-" + (columnWidths[1] + 2) + "s\n",
+                        tableData[i][0], tableData[i][1]);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+1. Passport Automation System
+diff
+Copy
+Edit
+Class: Applicant
+- applicantID
+- name
+- address
+- dob
+
+Class: Passport
+- passportID
+- issueDate
+- expiryDate
+- applicantID
+
+Class: Application
+- applicationID
+- status
+- submissionDate
+
+Class: Officer
+- officerID
+- name
+- designation
+Relationships:
+
+Applicant applies for Application
+
+Application is verified by Officer
+
+Application results in Passport
+
+2. Book Bank
+diff
+Copy
+Edit
+Class: Student
+- studentID
+- name
+- course
+
+Class: Book
+- bookID
+- title
+- author
+- isAvailable
+
+Class: Transaction
+- transactionID
+- bookID
+- studentID
+- issueDate
+- returnDate
+Relationships:
+
+Student borrows Book via Transaction
+
+3. Exam Registration
+diff
+Copy
+Edit
+Class: Student
+- studentID
+- name
+- department
+
+Class: Subject
+- subjectCode
+- name
+- credits
+
+Class: Registration
+- registrationID
+- studentID
+- subjectCode
+- paymentStatus
+Relationships:
+
+Student registers for Subject via Registration
+
+4. Stock Maintenance System
+diff
+Copy
+Edit
+Class: Product
+- productID
+- name
+- quantity
+- price
+
+Class: Supplier
+- supplierID
+- name
+- contactInfo
+
+Class: Purchase
+- purchaseID
+- productID
+- supplierID
+- date
+Relationships:
+
+Product is supplied by Supplier
+
+Purchase logs the transaction
+
+5. Online Course Reservation System
+diff
+Copy
+Edit
+Class: User
+- userID
+- name
+- email
+
+Class: Course
+- courseID
+- title
+- instructor
+
+Class: Reservation
+- reservationID
+- courseID
+- userID
+- status
+Relationships:
+
+User reserves Course via Reservation
+
+6. Airline/Railway Reservation System
+diff
+Copy
+Edit
+Class: Passenger
+- passengerID
+- name
+- age
+
+Class: Journey
+- journeyID
+- date
+- origin
+- destination
+
+Class: Ticket
+- ticketID
+- passengerID
+- journeyID
+- seatNumber
+Relationships:
+
+Passenger books Ticket for a Journey
+
+7. Software Personnel Management System
+diff
+Copy
+Edit
+Class: Employee
+- employeeID
+- name
+- role
+
+Class: Project
+- projectID
+- name
+- deadline
+
+Class: Assignment
+- assignmentID
+- employeeID
+- projectID
+- task
+Relationships:
+
+Employee works on Project via Assignment
+
+8. Credit Card Processing
+diff
+Copy
+Edit
+Class: CardHolder
+- holderID
+- name
+- cardNumber
+
+Class: CreditCard
+- cardNumber
+- expiryDate
+- limit
+
+Class: Transaction
+- transactionID
+- amount
+- date
+- cardNumber
+Relationships:
+
+CardHolder owns CreditCard
+
+CreditCard is used for Transaction
+
+9. E-book Management System
+diff
+Copy
+Edit
+Class: User
+- userID
+- name
+- email
+
+Class: Ebook
+- ebookID
+- title
+- author
+
+Class: Download
+- downloadID
+- ebookID
+- userID
+- downloadDate
+Relationships:
+
+User downloads Ebook via Download
+
+10. Recruitment System
+diff
+Copy
+Edit
+Class: Applicant
+- applicantID
+- name
+- resume
+
+Class: Job
+- jobID
+- title
+- description
+
+Class: Application
+- applicationID
+- applicantID
+- jobID
+- status
+Relationships:
+
+Applicant applies to Job via Application
+
+11. Foreign Trading System
+diff
+Copy
+Edit
+Class: Trader
+- traderID
+- name
+- country
+
+Class: TradeOrder
+- orderID
+- product
+- amount
+
+Class: Shipment
+- shipmentID
+- orderID
+- status
+Relationships:
+
+Trader creates TradeOrder
+
+TradeOrder has Shipment
+
+12. Conference Management System
+diff
+Copy
+Edit
+Class: Attendee
+- attendeeID
+- name
+- organization
+
+Class: Session
+- sessionID
+- topic
+- speaker
+
+Class: Registration
+- registrationID
+- sessionID
+- attendeeID
+Relationships:
+
+Attendee registers for Session
+
+13. BPO Management System
+diff
+Copy
+Edit
+Class: Agent
+- agentID
+- name
+- shift
+
+Class: Call
+- callID
+- duration
+- customerName
+
+Class: Performance
+- performanceID
+- agentID
+- rating
+Relationships:
+
+Agent handles Call
+
+Agent has Performance review
+
+14. Library Management System
+diff
+Copy
+Edit
+Class: Member
+- memberID
+- name
+- membershipType
+
+Class: Book
+- bookID
+- title
+- author
+
+Class: Borrowing
+- borrowingID
+- memberID
+- bookID
+- dueDate
+Relationships:
+
+Member borrows Book via Borrowing
+
+15. Student Information System
+diff
+Copy
+Edit
+Class: Student
+- studentID
+- name
+- department
+
+Class: Course
+- courseID
+- name
+- credits
+
+Class: Enrollment
+- enrollmentID
+- studentID
+- courseID
+- grade
+Relationships:
+
+Student enrolls in Course via Enrollment
