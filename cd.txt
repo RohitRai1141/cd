@@ -1,667 +1,264 @@
-sohttps://github.com/Manimaran-M3/Demmo.git
 
+Azure:
+2) Cost model:
+- Type custom deployment
+- Select a template
+- Under quick start template type: create-budget-simple
+- select template
+- Provide the following values
+- Subscription, region, budget name, time grain, amount, start date, end date ,
+threshold and contact mails
+- Click review and create
+
+
+3) Alerts:
+- Type alerts
+- Select monitor-> alerts
+- Click create-> alert rule
+- Under scope , select resource type, region, subscription
+- Under condition, select signal type
+- Select action grp or create one
+- Under project details , give resource grp name and subscription
+- Under alert rule details , give severity level, alert rule name, alert rule description
+- Give name and value under tags
+- Finally give review + create
+
+
+4) Billing Alerts
+- Type budgets in search bar
+- Click select scope
+- Give budget amt, alert conditions, email id for notification
+- Click review and create
+
+
+AWS:
+2) cost model:
+- Open aws s3 bucket
+- Refer video .. he he..
+- ok
+- For this till uploading html file is enough mam said to cse a
+students yesterday they said.. But i did upto lambda function
+creation and shared the video in mail . pls do check any doubts
+ask.. ok
+One sec will send
+
+3) Alaram:
+- Go to billing preference
+- Cloud watch
+- Create alarm
+- Select matrix (billing -> tot esti ->usd )
+- Threshold amt->3
+- create topic -> new topic
+- Name of alarm
+-
+GCP alert:
+- Alerting
+- Create policy
+- Select metricse (GCP location)
+- Configure trigger (Threshold 20) next
+- Configure notification (channel email) select channel
+Check box (notification in console)
+- Duration 7 days
+- Add label (key value )
+- Security level (warning)
+- Policy name (any)
+- Success lmao
 
 
-
-
-
-
-1. Verify MySQL/MariaDB is running (Windows)
-cmd
-sc query MySQL
-or for MariaDB:
-
-cmd
-sc query MariaDB
-Look for "STATE" showing "RUNNING"
-
-2. Start MySQL/MariaDB service if stopped
-cmd
-net start MySQL
-or for MariaDB:
-
-cmd
-net start MariaDB
-3. Check connection manually
-cmd
-mysql -u root -p
-(Enter your password Password@123 when prompted)
-
-spring connection 
-4. Run Spring Boot application
-cmd
-mvnw.cmd spring-boot:run
-Additional Windows-specific tips:
-If services aren't found:
-
-Check service names in Services Manager (services.msc)
-
-Common service names:
-
-MySQL: "MySQL80" or "MySQL57"
-
-MariaDB: "MariaDB"
-
-Alternative connection check:
-
-cmd
-mysqlshow -u root -p
-Environment variables:
-Ensure MySQL binaries are in your PATH:
-
-cmd
-set PATH=%PATH%;C:\Program Files\MySQL\MySQL Server 8.0\bin
-(Adjust path to your MySQL/MariaDB installation)
-
-If you get "mysql command not found":
-
-Navigate to MySQL bin directory first:
-
-cmd
-cd "C:\Program Files\MySQL\MySQL Server 8.0\bin"
-mysql -u root -p
-For MariaDB installed via XAMPP/WAMP:
-
-cmd
-cd C:\xampp\mysql\bin
-mysql.exe -u root -p
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-git init
-touch README.md
-git add README.md
-git add .
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/RohitRai1141/dc1.git
-git remote set-url origin https://github.com/RohitRai1141/dc1.git
-git remote -v
-git push -u origin main
-git pull origin main --rebase
-git push --force origin main
-rm -rf .git
-
-
-ex3git init
-git config --global --user.name "ssuruthi560"
-git config --global --user.email "suruthi.26csb@licet.ac.in"
-git config --global --list
-git add "first.txt"
-git add first.txt
-git commit -m "issue2"
-git status
-git log
-git branch -m main
-git remote add origin "https://github.com/ssuruthi560/demo24.git"
-git push -m origin "branch name"
-git checkout -b "new branch name"
-git switch -c "new branch name"
-git checkout "branch name"
-git switch "branch name"
-git pull origin "branch name"
-git merge "source branch name"
-git tag "tag name"
-git tag -a "tag name" -m "message"
-git push origin tag name
-git merge <source_branch>
-
-
-
-
-ex4
-choco install maven
-mvn archetype:generate -DgroupId=com.example -DartifactId=myproject -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
-mvn clean install -DskipTests
-mvn spring-boot:run
-mvn compile
-mvn test
-mvn package
-mvn install
-mvn clean
-mvn dependency:tree
-
-
-
-ex4
-gradle init
-gradle build
-gradle build -x test
-gradle run
-gradle bootRun
-
-gradle tasks
-gradle clean
-gradle compileJava
-gradle test
-gradle assemble
-gradle dependencies
-
-
-
-
-
-
-ex8 ansible
-1. Ansible Installation
-
-sudo apt update
-sudo apt install software-properties-common
-sudo add-apt-repository --yes --update ppa:ansible/ansible
-sudo apt install ansible
-
-🔁 If not in sudoers list:
-
-su
-sudo usermod -aG sudo "username"
-su "username"
-
-✅ 2. Verify Ansible Installation
-
-ansible --version
-
-🔁 Fix UTF-8 Encoding Issue:
-
-sudo nano /etc/default/locale
-
-Edit content:
-
-LANG="en_US.UTF-8"
-LC_CTYPE="en_US.UTF-8"
-
-Or run:
-
-sudo update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
-
-✅ 3. Create SSH Key
-
-ssh-keygen -t rsa -C "kabilantm default"
-ls -la .ssh
-cat .ssh/id_rsa.pub
-cat .ssh/id_rsa
-
-✅ 4. Copy SSH Key to Server
-
-ssh-copy-id -i ~/.ssh/id_rsa.pub "ipaddress"
-
-✅ 5. Test SSH Key
-
-ssh -i ~/.ssh/"keyname" "ipaddress"
-
-🔁 Fix Connection Refused (port 22):
-
-sudo apt install openssh-server
-sudo systemctl restart sshd
-
-✅ 6. Connect to Server
-
-ssh "ipaddress"
-
-✅ 7. Create Inventory File
-
-sudo nano inventory
-
-Content:
-
-[web]
-192.168.1.7 ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_user=kabilan
-
-✅ 8. Test Ansible Connection
-
-ansible all --key-file ~/.ssh/id_rsa -i inventory -m ping
-
-🔁 Fix permission denied error:
-
-chmod 600 ~/.ssh/id_rsa
-
-Alternative inventory test:
-
-ansible all -i inventory -m ping
-
-✅ 9. Create & Run Playbook
-
-Create:
-
-nano playbook.yml
-
-Example content:
-
----
-- name: Test playbook
-  hosts: web
-  tasks:
-    - name: Ping the server
-      ping:
-
-Run:
-
-ansible-playbook -i inventory playbook.yml
-
-
-
-
-
-
-
-
-ansible playbook
-✅ 1. Verify Ansible Installation and Connection
-
-ansible --version
-ansible all -i inventory -m ping
-
-✅ 2. Create Inventory File
-
-sudo nano inventory
-
-Content:
-
-[web]
-127.0.0.1 ansible_connection=local
-
-✅ 3. Create Ansible Playbook File
-
-nano web_setup.yml
-
-Content of web_setup.yml:
-
----
-- name: Setup simple web server
-  hosts: web
-  become: yes
-  tasks:
-    - name: Update apt packages
-      apt:
-        update_cache: yes
-
-    - name: Install Apache web server
-      apt:
-        name: apache2
-        state: present
-
-    - name: Start and enable Apache
-      service:
-        name: apache2
-        state: started
-        enabled: yes
-
-    - name: Create a simple index.html
-      copy:
-        dest: /var/www/html/index.html
-        content: "<h1>Hello from Ansible Web Server</h1>"
-
-✅ 4. Run the Playbook
-
-ansible-playbook -i inventory web_setup.yml
-
-✅ 5. Verify the Web Server
-
-Open your browser and go to:
-
-http://localhost
-
-
-
-
-
-
-
-
-
-
-azure ansable 
-Step 1: No code (Azure VM setup via GUI)
-
-Launch a VM from https://portal.azure.com
-✅ Step 2: Connect to VM and Install Jenkins
-
-Install Java (Pre-requisite):
-
-sudo apt update
-sudo apt install openjdk-17-jre
-
-Install Jenkins:
-
-curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
-
-echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
-
-sudo apt-get update
-sudo apt-get install jenkins
-
-✅ Step 3: Access Jenkins
-
-Go to this URL in your browser:
-
-http://<VM-public-ip>:8080
-
-✅ Step 4: Unlock Jenkins
-
-sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-
-Paste the output in the Jenkins web interface to unlock.
-✅ Step 5–7: Jenkins Web UI steps
-
-These steps are done inside the Jenkins interface:
-
-    Click New Item → Enter job name → Select Freestyle project
-
-    In Build Steps, select Execute Shell and input any shell script, e.g.:
-
-echo "Hello from Jenkins!"
-
-    Click Save
-
-    Click Build Now
-
-    Click on the build number → Console Output to see result
-
-
-
-
-
-
-Here is **all the Gradle-related code and commands** extracted directly from the file:
-
----
-
-### **Gradle Installation and Setup**
-1. **Download Gradle:**
-   - Visit: [https://gradle.org/install/](https://gradle.org/install/)
-   - Download the **"Complete" distribution ZIP file**
-
-2. **Extract Gradle ZIP File:**
-   - Right-click on ZIP → "Extract All"
-
-3. **Set Environment Variables:**
-   - System Properties → Advanced system settings → Environment Variables
-   - Under "System variables", edit the **Path** and add Gradle's `bin` path
-
-4. **Verify Gradle Installation:**
-```bash
-gradle -v
-```
-
----
-
-### **Initialize a Gradle Project**
-```bash
-gradle init
-```
-- Choose project type:
-  - `application` for Java application
-  - `library`, `groovy-library`, or `scala-library` for others
-- Provide project name
-- Configure project (default or customized)
-
----
-
-### **Build and Run the Project**
-```bash
-gradle build
-gradle run
-```
-
----
-
-### **Configure `build.gradle` to Create JAR File**
-```groovy
-plugins {
-    id 'java'
-}
-
-task createJar(type: Jar) {
-    from sourceSets.main.output
-    archiveFileName = "my-project.jar"
-}
-```
-
----
-
-### **Generate the JAR**
-```bash
-gradle createJar
-```
-
-- Output will be in: `build/libs/`
-
----
-
-Let me know if you want me to generate a working sample project structure using this Gradle setup.
-
-
-
-
-
-
-
-
-ChatGPT
-You said:
-EX-1,3,4,5.pdf
-PDF
-Give the code for gradel quickly all code for gradel 
-ChatGPT said:
-Here's a quick summary of all the code and commands for Gradle installation and project setup from your file:
-
-1. Install Gradle (Windows)
-Download: https://gradle.org/install/
-
-Extract the ZIP file.
-
-Set environment variables:
-
-Go to System Properties → Environment Variables
-
-Add the Gradle bin path to the Path variable
-
-2. Verify Installation
-gradle -v
-3. Initialize a Gradle Project
-gradle init
-Choose: application / library / groovy-library / scala-library
-
-Set project name and configuration
-
-4. Build and Run the Project
-gradle build
-gradle run
-5. Create a JAR File
-Make sure this is in your build.gradle:
-
-plugins {
-    id 'java'
-}
-
-task createJar(type: Jar) {
-    from sourceSets.main.output
-    archiveFileName = "my-project.jar"
-}
-Then run:
-
-gradle createJar
-Output JAR will be in: build/libs/
-
-
-
-
-
-Install Gradle on Windows
-cmd
-choco install gradle -y  # Using Chocolatey
-OR Download manually, extract, and add bin to PATH.
-
-Verify:
-
-cmd
-gradle -v
-2. Create Project
-cmd
-gradle init --type java-application
-cd <project-name>
-3. Project Structure
-login-demo-gradle/
-├── src/
-│   ├── main/
-│   │   ├── java/com/example/
-│   │   │   ├── config/
-│   │   │   ├── controller/
-│   │   │   ├── model/
-│   │   │   ├── repository/
-│   │   │   └── LoginDemoApplication.java
-│   │   └── resources/
-│   │       ├── static/
-│   │       ├── templates/
-│   │       └── application.properties
-│   └── test/ (tests)
-└── build.gradle
-4. build.gradle Configuration
-groovy
-plugins {
-    id 'java'
-    id 'org.springframework.boot' version '3.2.5'
-    id 'io.spring.dependency-management' version '1.1.4'
-}
-
-group = 'com.example'
-version = '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    
-    // Optional Security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
-5. Database Setup
-MySQL Commands (same as Maven version):
-
-sql
-CREATE DATABASE demo_db;
-USE demo_db;
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(100) NOT NULL
-);
-INSERT INTO users VALUES (1, 'admin', 'admin123');
-application.properties (same as Maven):
-
-properties
-spring.datasource.url=jdbc:mysql://localhost:3306/demo_db
-spring.datasource.username=root
-spring.datasource.password=yourpassword
-spring.jpa.hibernate.ddl-auto=update
-spring.thymeleaf.cache=false
-6. MVC Components
-Entity (User.java)
-java
-package com.example.model;
-
-import jakarta.persistence.*;
-
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String username;
-    private String password;
-    
-    // Getters and Setters
-}
-Repository (UserRepository.java)
-java
-package com.example.repository;
-
-import com.example.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
-}
-Controller (LoginController.java)
-java
-package com.example.controller;
-
-import com.example.model.User;
-import com.example.repository.UserRepository;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-@Controller
-public class LoginController {
-    
-    private final UserRepository userRepo;
-
-    public LoginController(UserRepository userRepo) {
-        this.userRepo = userRepo;
-    }
-
-    @GetMapping("/login")
-    public String showLoginForm() {
-        return "login";
-    }
-
-    @PostMapping("/login")
-    public String login(@RequestParam String username, 
-                       @RequestParam String password, 
-                       Model model) {
-        User user = userRepo.findByUsername(username);
-        if (user != null && user.getPassword().equals(password)) {
-            return "redirect:/welcome";
-        }
-        model.addAttribute("error", "Invalid credentials");
-        return "login";
-    }
-}
-Thymeleaf Template (login.html)
-html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <title>Fitness App - Welcome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #c9ffbf, #ffafbd);
+            padding: 20px;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+        }
+
+        #goalProgress {
+            width: 100%;
+            height: 20px;
+            background-color: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        #goalProgressBar {
+            height: 100%;
+            background-color: #76c7c0;
+            width: 50%;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .logout {
+            background-color: #dc3545;
+        }
+
+        .logout:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Login</h1>
-    <form th:action="@{/login}" method="post">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-        <p th:if="${error}" th:text="${error}" style="color:red"></p>
-    </form>
+    <div class="container">
+        <h2>Welcome to Your Fitness Dashboard 💪</h2>
+
+        <div class="section">
+            <h3>Workout Tracker</h3>
+            <label for="workoutType">Workout Type</label>
+            <select id="workoutType">
+                <option value="Running">Running</option>
+                <option value="Cycling">Cycling</option>
+                <option value="Yoga">Yoga</option>
+                <option value="Weights">Weights</option>
+            </select>
+
+            <label for="duration">Duration (mins) / Reps</label>
+            <input type="number" id="duration" min="1" placeholder="Enter value">
+
+            <button onclick="logWorkout()">Log Workout</button>
+            <div id="workoutLog" class="result"></div>
+        </div>
+
+        <div class="section">
+            <h3>BMI Calculator</h3>
+            <label for="weight">Weight (kg)</label>
+            <input type="number" id="weight" placeholder="Enter your weight">
+
+            <label for="height">Height (cm)</label>
+            <input type="number" id="height" placeholder="Enter your height">
+
+            <button onclick="calculateBMI()">Calculate BMI</button>
+            <div id="bmiResult" class="result"></div>
+        </div>
+
+        <div class="section">
+            <h3>Daily Goal Progress</h3>
+            <label>Goal Completion</label>
+            <div id="goalProgress">
+                <div id="goalProgressBar"></div>
+            </div>
+            <button onclick="updateProgress()">Update Progress</button>
+        </div>
+
+        <form th:action="@{/logout}" method="get">
+            <button class="logout" type="submit">Logout</button>
+        </form>
+    </div>
+
+    <script>
+        function logWorkout() {
+            const type = document.getElementById('workoutType').value;
+            const value = document.getElementById('duration').value;
+            const log = document.getElementById('workoutLog');
+
+            if (value === "" || value <= 0) {
+                log.textContent = "Please enter a valid number.";
+                log.style.color = "red";
+                return;
+            }
+
+            log.textContent = `✅ You completed ${value} mins/reps of ${type}`;
+            log.style.color = "green";
+        }
+
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100; 
+            const result = document.getElementById('bmiResult');
+
+            if (!weight || !height) {
+                result.textContent = "Enter valid height and weight.";
+                result.style.color = "red";
+                return;
+            }
+
+            const bmi = (weight / (height * height)).toFixed(2);
+            result.textContent = `📊 Your BMI is ${bmi}`;
+            result.style.color = "blue";
+        }
+
+        function updateProgress() {
+            const progressBar = document.getElementById('goalProgressBar');
+            const currentWidth = parseInt(progressBar.style.width);
+            const newWidth = Math.min(currentWidth + 10, 100);
+            progressBar.style.width = newWidth + '%';
+        }
+    </script>
 </body>
 </html>
-7. Run the Application
-cmd
-gradle bootRun
-Access: http://localhost:8080/login
-Test
 
-New chat
-Message DeepSeek
+import json
+
+def lambda_handler(event, context):
+    first_name = event.get('firstName', '')  # Default to empty string if missing
+    last_name = event.get('lastName', '')    # Default to empty string if missing
+    name = f"{first_name} {last_name}".strip()
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps(f"Hello from lambda, {name}")
+    }
+
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::your-bucket-name/*"
+        }
+    ]
+}
