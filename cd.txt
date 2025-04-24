@@ -424,7 +424,272 @@ Student enrolls in Course via Enrollment
 
 
 
+use case 
+@startuml
+actor "General Public" as GP
+actor Admin
+
+rectangle Lawverse {
+  GP --> (Login)
+  GP --> (Browse Courses)
+  GP --> (View Learning Material)
+  GP --> (Start Learning)
+  (Start Learning) --> (Take Quizzes) : <<include>>
+  GP --> (Take Quizzes)
+  GP --> (Participate in Forum)
+  GP --> (Access Legal Resources)
+
+  Admin --> (Manage Courses and Content)
+  Admin --> (Validate Forum Posts)
+  Admin --> (Monitor User Progress)
+}
+@enduml
 
 
 
 
+
+
+class
+@startuml
+class User {
+  - username: String
+  - password: String
+  + login(): void
+}
+
+class Learner {
+  + enroll(): void
+}
+class Admin {
+  + manageCourse(): void
+}
+
+class Course {
+  - title: String
+  - description: String
+  + enroll(): void
+}
+
+class Material {
+  - content: String
+}
+
+class Quiz {
+  - questions: List
+}
+
+class Result {
+  - score: int
+  - feedback: String
+}
+
+User <|-- Learner
+User <|-- Admin
+
+Learner "1" --> "0..*" Course
+Course "1" --> "0..*" Material
+Course "1" --> "0..*" Quiz
+Quiz "1" --> "1" Result
+
+@enduml
+
+               +-------------+
+               |    User     |
+               +-------------+
+               | -username   |
+               | -password   |
+               +-------------+
+               | +login()    |
+               +-------------+
+                 /       \
+         +---------+   +--------+
+         | Learner |   | Admin  |
+         +---------+   +--------+
+         | +enroll()|   |+manageCourse()|
+         +---------+   +--------+
+
+         +---------+
+         | Course  |
+         +---------+
+         | -title  |
+         | -desc   |
+         +---------+
+         | +enroll()|
+         +---------+
+             / \
+        +--------+    +------+
+        | Quiz   |    |Material|
+        +--------+    +------+
+        |questions|   |content|
+        +--------+    +------+
+
+         +--------+
+         | Result |
+         +--------+
+         | score  |
+         | feedback|
+         +--------+
+
+
+
+
+
+
+sequence 
+User        Application         Database
+ |               |                 |
+ |---UserId()--->|                 |
+ |               |--SaveId()----->|
+ |               |<--Confirm------|
+ |---Dashboard()->                 |
+ |               |--PersonalData->|
+ |               |<--ReturnData---|
+ |---MyLearning()->                |
+ |               |--GameEssentials|
+ |               |<--Essentials---|
+ |---SelectDomain()->              |
+ |---GameStart()--->              |
+ |---UserInputs()--->             |
+ |               |--SaveInputs-->|
+ |               |--UpdateDash-->|
+ |               |<--ReturnResult|
+
+
+@startuml
+actor User
+participant Application
+database Database
+
+User -> Application : UserId()
+Application -> Database : SaveId()
+Database --> Application : Confirm
+
+User -> Application : Dashboard()
+Application -> Database : PersonalData()
+Database --> Application : ReturnData
+
+User -> Application : MyLearning()
+Application -> Database : GameEssentials()
+Database --> Application : Essentials
+
+User -> Application : SelectDomain()
+User -> Application : GameStart()
+User -> Application : UserInputs()
+Application -> Database : SaveInputs()
+Application -> Database : UpdateDashboard()
+Database --> Application : ReturnResult
+
+@endum
+
+
+
+
+
+
+collaboration diagram 
+User → HomeLogin : UserInput
+HomeLogin → Dashboard : 2StepVerification
+HomeLogin → User : ReturnStatus
+User → MyLearning : AccessLearning
+MyLearning → Database : GameEssentials
+MyLearning → Domain : GetDetails
+Domain → Next : MoreToNextActivity
+
+@startuml
+object User
+object HomeLogin
+object Dashboard
+object MyLearning
+object Domain
+object Database
+
+User -> HomeLogin : UserInput
+HomeLogin -> Dashboard : 2StepVerification
+HomeLogin -> User : ReturnStatus
+User -> MyLearning : AccessLearning
+MyLearning -> Database : GameEssentials
+MyLearning -> Domain : GetDetails
+Domain -> User : MoreToNextActivity
+@enduml
+
+
+
+
+
+
+statechart diagram 
+[Initial] → Idle
+Idle → Active : Login
+Active → Browsing Courses
+Browsing Courses → Learning : Select Course
+Learning → Taking Quiz
+Taking Quiz → Processing Results
+Processing Results → Passed / Failed
+Passed → Return to Dashboard
+Failed → Retry Quiz
+Return to Dashboard → Logout
+Logout → [Final]
+
+@startuml
+[*] --> Idle
+Idle --> Active : Login
+Active --> Browsing_Courses
+Browsing_Courses --> Learning : Select Course
+Learning --> Taking_Quiz
+Taking_Quiz --> Processing_Results
+Processing_Results --> Passed : Score >= pass
+Processing_Results --> Failed : Score < pass
+Passed --> Return_to_Dashboard
+Failed --> Retry_Quiz
+Return_to_Dashboard --> Logout
+Logout --> [*]
+@enduml
+
+
+
+
+
+
+
+
+Activity diagram
+[Start]
+  |
+Login
+  |
+Browse Courses
+  |
+Add Course
+  |
+Start Learning
+  |
+Take Quiz
+  |
+[Decision: Pass/Fail?]
+   /         \
+ Pass         Fail
+  |            |
+Dashboard     Retry Quiz
+  |
+Logout
+  |
+[End]
+
+@startuml
+start
+:Login;
+:Browse Courses;
+:Add Course;
+:Start Learning;
+:Take Quiz;
+
+if (Pass Quiz?) then (Yes)
+  :Go to Dashboard;
+else (No)
+  :Retry Quiz;
+endif
+
+:Logout;
+stop
+@enduml
