@@ -1,0 +1,98 @@
+# Let's generate a ZIP file containing detailed XMI representations of various UML diagrams for a Login App.
+# These will include: Use Case Diagram, Class Diagram, Sequence Diagram, Activity Diagram, and Component Diagram.
+
+import zipfile
+from pathlib import Path
+
+# Define XMI content for each UML diagram
+use_case_xmi = '''<?xml version="1.0" encoding="UTF-8"?>
+<XMI xmi.version="2.1" xmlns:uml="http://www.omg.org/spec/UML/20090901">
+  <uml:Model xmi:id="model1" name="LoginAppUseCaseModel">
+    <packagedElement xmi:type="uml:Actor" xmi:id="actor1" name="User"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="usecase1" name="Enter Credentials"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="usecase2" name="Validate Login"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="usecase3" name="Access System"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="assoc1">
+      <memberEnd xmi:idref="actor1"/>
+      <memberEnd xmi:idref="usecase1"/>
+    </packagedElement>
+  </uml:Model>
+</XMI>'''
+
+class_diagram_xmi = '''<?xml version="1.0" encoding="UTF-8"?>
+<XMI xmi.version="2.1" xmlns:uml="http://www.omg.org/spec/UML/20090901">
+  <uml:Model xmi:id="model2" name="LoginAppClassModel">
+    <packagedElement xmi:type="uml:Class" xmi:id="class1" name="User">
+      <ownedAttribute xmi:id="attr1" name="username" type="String"/>
+      <ownedAttribute xmi:id="attr2" name="password" type="String"/>
+      <ownedOperation xmi:id="op1" name="getUsername"/>
+      <ownedOperation xmi:id="op2" name="getPassword"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="class2" name="AuthService">
+      <ownedAttribute xmi:id="attr3" name="userDB" type="User[]"/>
+      <ownedOperation xmi:id="op3" name="validateUser(username: String, password: String): Boolean"/>
+    </packagedElement>
+  </uml:Model>
+</XMI>'''
+
+sequence_diagram_xmi = '''<?xml version="1.0" encoding="UTF-8"?>
+<XMI xmi.version="2.1" xmlns:uml="http://www.omg.org/spec/UML/20090901">
+  <uml:Model xmi:id="model3" name="LoginAppSequenceModel">
+    <packagedElement xmi:type="uml:Interaction" xmi:id="seq1" name="LoginProcess">
+      <lifeline xmi:id="life1" name="User" represents="class1"/>
+      <lifeline xmi:id="life2" name="LoginPage" represents="class2"/>
+      <lifeline xmi:id="life3" name="AuthService" represents="class3"/>
+      <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="msg1">
+        <message name="enterCredentials()" sendEvent="life1" receiveEvent="life2"/>
+      </fragment>
+      <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="msg2">
+        <message name="validateUser()" sendEvent="life2" receiveEvent="life3"/>
+      </fragment>
+    </packagedElement>
+  </uml:Model>
+</XMI>'''
+
+activity_diagram_xmi = '''<?xml version="1.0" encoding="UTF-8"?>
+<XMI xmi.version="2.1" xmlns:uml="http://www.omg.org/spec/UML/20090901">
+  <uml:Model xmi:id="model4" name="LoginAppActivityModel">
+    <packagedElement xmi:type="uml:Activity" xmi:id="activity1" name="LoginActivity">
+      <node xmi:type="uml:InitialNode" xmi:id="initial1"/>
+      <node xmi:type="uml:ActivityNode" xmi:id="action1" name="Enter Credentials"/>
+      <node xmi:type="uml:ActivityNode" xmi:id="action2" name="Validate Credentials"/>
+      <node xmi:type="uml:DecisionNode" xmi:id="decision1"/>
+      <node xmi:type="uml:ActivityFinalNode" xmi:id="final1"/>
+    </packagedElement>
+  </uml:Model>
+</XMI>'''
+
+component_diagram_xmi = '''<?xml version="1.0" encoding="UTF-8"?>
+<XMI xmi.version="2.1" xmlns:uml="http://www.omg.org/spec/UML/20090901">
+  <uml:Model xmi:id="model5" name="LoginAppComponentModel">
+    <packagedElement xmi:type="uml:Component" xmi:id="component1" name="LoginUI"/>
+    <packagedElement xmi:type="uml:Component" xmi:id="component2" name="AuthenticationService"/>
+    <packagedElement xmi:type="uml:Component" xmi:id="component3" name="Database"/>
+  </uml:Model>
+</XMI>'''
+
+# Save all XMI contents into a zip file
+output_dir = Path("/mnt/data/login_app_uml_xmi")
+output_dir.mkdir(parents=True, exist_ok=True)
+
+files = {
+    "use_case_diagram.xmi": use_case_xmi,
+    "class_diagram.xmi": class_diagram_xmi,
+    "sequence_diagram.xmi": sequence_diagram_xmi,
+    "activity_diagram.xmi": activity_diagram_xmi,
+    "component_diagram.xmi": component_diagram_xmi,
+}
+
+for filename, content in files.items():
+    (output_dir / filename).write_text(content)
+
+# Zip the files
+zip_path = Path("/mnt/data/login_app_uml_diagrams.zip")
+with zipfile.ZipFile(zip_path, "w") as zipf:
+    for file in output_dir.iterdir():
+        zipf.write(file, file.name)
+
+zip_path.name
