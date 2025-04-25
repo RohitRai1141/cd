@@ -1,650 +1,553 @@
+MOV A, #25H      ; Load A with 25H
+ADD A, #15H      ; Add 15H to A
+; Result in A = 3AH
+
+MOV A, #40H      ; Load A with 40H
+SUBB A, #10H     ; Subtract 10H from A (no borrow)
+; Result in A = 30H
+
+MOV A, #05H      ; Load A with 5
+MOV B, #03H      ; Load B with 3
+MUL AB           ; Multiply A * B
+; Result: A = low byte, B = high byte
+
+MOV A, #0CH      ; Load A with 12
+MOV B, #04H      ; Load B with 4
+DIV AB           ; Divide A by B
+; Result: A = Quotient, B = Remainder
+
+
+MOV A, #0F0H     ; A = 11110000
+ANL A, #0AAH     ; AND with 10101010
+; Result: A = 10100000
 
 
 
 
 
 
-public class Table {
+MOV A, #0F0H     ; A = 11110000
+ORL A, #0AAH     ; OR with 10101010
+; Result: A = 11111010
 
-    public static void main(String[] args) {
-        String[][] tableData = {
-                {"Username", "Password"},
-                {"Alice", "helene@123"},
-                {"Bob", "bob@123"},
-                {"Charlie", "char@231"}
-        };
+MOV A, #0F0H     ; A = 11110000
+ORL A, #0AAH     ; OR with 10101010
+; Result: A = 11111010
 
-        // Calculate maximum width for each column
-        int[] columnWidths = new int[tableData[0].length];
-        for (String[] row : tableData) {
-            for (int i = 0; i < row.length; i++) {
-                columnWidths[i] = Math.max(columnWidths[i], row[i].length());
-            }
-        }
+MOV A, #0F0H     ; A = 11110000
+XRL A, #0AAH     ; XOR with 10101010
+; Result: A = 01011010
 
-        // Print table with separator between columns
-        for (int i = 0; i < tableData.length; i++) {
-            // Print each row with proper formatting, separating the username and password
-            if (i == 0) {
-                // Header row with separator line between columns
-                System.out.printf("%-" + (columnWidths[0] + 2) + "s | %-" + (columnWidths[1] + 2) + "s\n",
-                        tableData[i][0], tableData[i][1]);
-                // Print separator line between columns
-                for (int j = 0; j < columnWidths[0] + 2; j++) {
-                    System.out.print("-");
-                }
-                System.out.print(" | ");
-                for (int j = 0; j < columnWidths[1] + 2; j++) {
-                    System.out.print("-");
-                }
-                System.out.println();
-            } else {
-                // Data rows with username and password
-                System.out.printf("%-" + (columnWidths[0] + 2) + "s | %-" + (columnWidths[1] + 2) + "s\n",
-                        tableData[i][0], tableData[i][1]);
-            }
-        }
+MOV A, #55H      ; A = 01010101
+CPL A            ; Complement A
+; Result: A = 10101010
+
+MOV A, #0FFH     ; A = 11111111
+ANL A, #0F0H     ; Mask lower nibble
+; Result: A = 11110000
+
+MOV A, #0FFH     ; A = 11111111
+ANL A, #0F0H     ; Mask lower nibble
+; Result: A = 11110000
+
+MOV A, #00H      ; A = 00000000
+ORL A, #0F0H     ; Set upper nibble
+; Result: A = 11110000
+
+
+
+greatesrt
+; Assuming the numbers are: num1 = 45H, num2 = 92H, num3 = 38H
+; Result will be stored in R7
+
+ORG 0000H          ; Start of the program
+
+MOV R0, #45H       ; Load first number into R0
+MOV R1, #92H       ; Load second number into R1
+MOV R2, #38H       ; Load third number into R2
+
+MOV R7, R0         ; Assume R0 (45H) is the greatest
+
+CJNE R1, R7, CHECK1  ; Compare R1 with R7
+JC CHECK1            ; If R1 < R7, skip
+MOV R7, R1           ; Else, R1 is greater
+
+CHECK1:
+CJNE R2, R7, CHECK2  ; Compare R2 with current greatest (R7)
+JC CHECK2            ; If R2 < R7, skip
+MOV R7, R2           ; Else, R2 is greater
+
+CHECK2:
+; Now R7 holds the greatest number
+
+END                  ; End of program
+
+
+
+
+
+
+
+
+
+
+
+
+MOV A, #55H       ; Load A with 55H
+MOV 40H, A        ; Store 55H in RAM location 40H
+MOV 41H, A        ; Store 55H in RAM location 41H
+
+MOV A, #55H       ; Load A with 55H
+MOV R0, #40H      ; Load pointer R0 with 40H
+MOV @R0, A        ; Store A (55H) at address pointed by R0 => 40H
+INC R0            ; Increment R0 to point to 41H
+MOV @R0, A        ; Store A (55H) at address pointed by R0 => 41H
+
+MOV A, #55H       ; Load A with 55H
+MOV R0, #40H      ; Load pointer R0 with 40H
+MOV R2, #02       ; Load counter with 2
+AGAIN: MOV @R0, A ; Store 55H at address pointed by R0
+       INC R0     ; Increment R0 to next address
+       DJNZ R2, AGAIN ; Decrement R2 and repeat if not zero
+
+
+
+
+
+MOV A, #55H       ; Load A with 55H
+
+BACK: MOV P1, A   ; Send A to Port 1
+      ; ACALL DELAY ; Optional delay (write delay subroutine if needed)
+      CPL A        ; Complement A (55H ↔ AAH alternates)
+      SJMP BACK    ; Repeat forever
+
+MOV A, #0FFH      ; A = FFH
+MOV P1, A         ; Make P1 an input port by writing all 1s
+
+MOV A, P1         ; Read data from Port 1
+MOV R7, A         ; Store it in R7
+
+; ACALL DELAY      ; Optional delay
+
+MOV A, P1         ; Read another data from P1
+MOV R5, A         ; Store it in R5
+
+
+
+
+
+
+
+Keil
+#include <reg51.h>
+void main(void)
+{
+    unsigned char x, y, z;
+    x = 0x12;       // 18 in decimal
+    y = 0x34;       // 52 in decimal
+    P0 = 0x00;      // Clear Port 0
+
+    z = x + y;      // Addition: 18 + 52 = 70 (0x46)
+    P0 = z;         // Output result to Port 0
+
+    while (1);      // Infinite loop
+}
+
+#include <reg51.h>
+void main(void)
+{
+    unsigned char x, y, z;
+    x = 0x34;       // 52
+    y = 0x12;       // 18
+    P0 = 0x00;
+
+    z = x - y;      // Subtraction: 52 - 18 = 34 (0x22)
+    P0 = z;
+
+    while (1);
+}
+
+#include <reg51.h>
+void main(void)
+{
+    unsigned char x, y, z;
+    x = 0x04;       // 4
+    y = 0x05;       // 5
+    P0 = 0x00;
+
+    z = x * y;      // Multiplication: 4 * 5 = 20 (0x14)
+    P0 = z;
+
+    while (1);
+}
+
+#include <reg51.h>
+void main(void)
+{
+    unsigned char x, y, z;
+    x = 0x34;       // 52
+    y = 0x12;       // 18
+    P0 = 0x00;
+
+    z = x / y;      // Division: 52 / 18 = 2 (0x02)
+    P0 = z;
+
+    while (1);
+}
+
+
+
+
+
+port op
+#include <reg51.h>
+
+void main(void)
+{
+    A = 0x25;  // Load 0x25 into the accumulator (A)
+}
+
+#include <reg51.h>
+void main(void)
+{
+    unsigned char a;
+    a = 0x25;
+    P1 = a;
+    a = 0x46;
+    P1 = a;
+    a = 0x92;
+    P1 = a;
+    while (1); // optional infinite loop
+}
+
+#include <reg51.h>
+void main(void)
+{
+    while (1)
+    {
+        P1 = 0x55;  // Send 01010101
+        // Delay can be added here
+        P1 = 0xAA;  // Send 10101010
+        // Delay can be added here
+    }
+}
+
+#include <reg51.h>
+void main(void)
+{
+    while (1)
+    {
+        P1 = 0x55;  // Send 01010101
+        // Delay can be added here
+        P1 = 0xAA;  // Send 10101010
+        // Delay can be added here
     }
 }
 
 
 
-
-
-
-1. Passport Automation System
-diff
-Copy
-Edit
-Class: Applicant
-- applicantID
-- name
-- address
-- dob
-
-Class: Passport
-- passportID
-- issueDate
-- expiryDate
-- applicantID
-
-Class: Application
-- applicationID
-- status
-- submissionDate
-
-Class: Officer
-- officerID
-- name
-- designation
-Relationships:
-
-Applicant applies for Application
-
-Application is verified by Officer
-
-Application results in Passport
-
-2. Book Bank
-diff
-Copy
-Edit
-Class: Student
-- studentID
-- name
-- course
-
-Class: Book
-- bookID
-- title
-- author
-- isAvailable
-
-Class: Transaction
-- transactionID
-- bookID
-- studentID
-- issueDate
-- returnDate
-Relationships:
-
-Student borrows Book via Transaction
-
-3. Exam Registration
-diff
-Copy
-Edit
-Class: Student
-- studentID
-- name
-- department
-
-Class: Subject
-- subjectCode
-- name
-- credits
-
-Class: Registration
-- registrationID
-- studentID
-- subjectCode
-- paymentStatus
-Relationships:
-
-Student registers for Subject via Registration
-
-4. Stock Maintenance System
-diff
-Copy
-Edit
-Class: Product
-- productID
-- name
-- quantity
-- price
-
-Class: Supplier
-- supplierID
-- name
-- contactInfo
-
-Class: Purchase
-- purchaseID
-- productID
-- supplierID
-- date
-Relationships:
-
-Product is supplied by Supplier
-
-Purchase logs the transaction
-
-5. Online Course Reservation System
-diff
-Copy
-Edit
-Class: User
-- userID
-- name
-- email
-
-Class: Course
-- courseID
-- title
-- instructor
-
-Class: Reservation
-- reservationID
-- courseID
-- userID
-- status
-Relationships:
-
-User reserves Course via Reservation
-
-6. Airline/Railway Reservation System
-diff
-Copy
-Edit
-Class: Passenger
-- passengerID
-- name
-- age
-
-Class: Journey
-- journeyID
-- date
-- origin
-- destination
-
-Class: Ticket
-- ticketID
-- passengerID
-- journeyID
-- seatNumber
-Relationships:
-
-Passenger books Ticket for a Journey
-
-7. Software Personnel Management System
-diff
-Copy
-Edit
-Class: Employee
-- employeeID
-- name
-- role
-
-Class: Project
-- projectID
-- name
-- deadline
-
-Class: Assignment
-- assignmentID
-- employeeID
-- projectID
-- task
-Relationships:
-
-Employee works on Project via Assignment
-
-8. Credit Card Processing
-diff
-Copy
-Edit
-Class: CardHolder
-- holderID
-- name
-- cardNumber
-
-Class: CreditCard
-- cardNumber
-- expiryDate
-- limit
-
-Class: Transaction
-- transactionID
-- amount
-- date
-- cardNumber
-Relationships:
-
-CardHolder owns CreditCard
-
-CreditCard is used for Transaction
-
-9. E-book Management System
-diff
-Copy
-Edit
-Class: User
-- userID
-- name
-- email
-
-Class: Ebook
-- ebookID
-- title
-- author
-
-Class: Download
-- downloadID
-- ebookID
-- userID
-- downloadDate
-Relationships:
-
-User downloads Ebook via Download
-
-10. Recruitment System
-diff
-Copy
-Edit
-Class: Applicant
-- applicantID
-- name
-- resume
-
-Class: Job
-- jobID
-- title
-- description
-
-Class: Application
-- applicationID
-- applicantID
-- jobID
-- status
-Relationships:
-
-Applicant applies to Job via Application
-
-11. Foreign Trading System
-diff
-Copy
-Edit
-Class: Trader
-- traderID
-- name
-- country
-
-Class: TradeOrder
-- orderID
-- product
-- amount
-
-Class: Shipment
-- shipmentID
-- orderID
-- status
-Relationships:
-
-Trader creates TradeOrder
-
-TradeOrder has Shipment
-
-12. Conference Management System
-diff
-Copy
-Edit
-Class: Attendee
-- attendeeID
-- name
-- organization
-
-Class: Session
-- sessionID
-- topic
-- speaker
-
-Class: Registration
-- registrationID
-- sessionID
-- attendeeID
-Relationships:
-
-Attendee registers for Session
-
-13. BPO Management System
-diff
-Copy
-Edit
-Class: Agent
-- agentID
-- name
-- shift
-
-Class: Call
-- callID
-- duration
-- customerName
-
-Class: Performance
-- performanceID
-- agentID
-- rating
-Relationships:
-
-Agent handles Call
-
-Agent has Performance review
-
-14. Library Management System
-diff
-Copy
-Edit
-Class: Member
-- memberID
-- name
-- membershipType
-
-Class: Book
-- bookID
-- title
-- author
-
-Class: Borrowing
-- borrowingID
-- memberID
-- bookID
-- dueDate
-Relationships:
-
-Member borrows Book via Borrowing
-
-15. Student Information System
-diff
-Copy
-Edit
-Class: Student
-- studentID
-- name
-- department
-
-Class: Course
-- courseID
-- name
-- credits
-
-Class: Enrollment
-- enrollmentID
-- studentID
-- courseID
-- grade
-Relationships:
-
-Student enrolls in Course via Enrollment
-
-
-
-
-
-
-
-
-
-use case 
-@startuml
-actor "General Public" as GP
-actor Admin
-
-rectangle Lawverse {
-  GP --> (Login)
-  GP --> (Browse Courses)
-  GP --> (View Learning Material)
-  GP --> (Start Learning)
-  (Start Learning) --> (Take Quizzes) : <<include>>
-  GP --> (Take Quizzes)
-  GP --> (Participate in Forum)
-  GP --> (Access Legal Resources)
-
-  Admin --> (Manage Courses and Content)
-  Admin --> (Validate Forum Posts)
-  Admin --> (Monitor User Progress)
+#include <reg51.h>
+// Delay function for approx 0.25 seconds
+void delay_qs(void)
+{
+    unsigned int i, j;
+    for (i = 0; i < 200; i++)       // Adjust these values as per clock
+        for (j = 0; j < 1275; j++); // Inner loop for time waste
 }
-@enduml
+void main(void)
+{
+    while (1)
+    {
+        P0 = 0x55;  // 01010101
+        P1 = 0x55;
+        P2 = 0x55;
+        delay_qs(); // 1/4 second delay
 
-
-
-
-
-
-class
-@startuml
-class User {
-  - username: String
-  - password: String
-  + login(): void
+        P0 = 0xAA;  // 10101010
+        P1 = 0xAA;
+        P2 = 0xAA;
+        delay_qs(); // 1/4 second delay
+    }
 }
 
-class Learner {
-  + enroll(): void
+
+ORG 00H
+SJMP MAIN        ; Jump to MAIN (start program)
+ORG 30H
+MAIN:
+    MOV TMOD, #20H     ; Timer1, Mode 2 (auto reload)
+    MOV TH1, #-3       ; Load value for 9600 baud (11.0592 MHz crystal)
+    MOV SCON, #50H     ; Serial mode 1, 8-bit data, REN enabled
+    SETB TR1           ; Start Timer1
+AGAIN:
+    MOV A, #'E'
+    ACALL TRANS        ; Send 'E'
+    MOV A, #'C'
+    ACALL TRANS        ; Send 'C'
+    MOV A, #'E'
+    ACALL TRANS        ; Send 'E'
+    SJMP AGAIN         ; Repeat forever
+; === Subroutine: TRANS ===
+TRANS:
+    MOV SBUF, A        ; Load A into SBUF for transmission
+HERE: 
+    JNB TI, HERE       ; Wait till TI = 1 (transmit complete)
+    CLR TI             ; Clear TI for next transmission
+    RET
+END
+
+
+
+
+
+
+
+
+
+
+
+Artino
+LED
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT); // Set the built-in LED pin as OUTPUT
 }
-class Admin {
-  + manageCourse(): void
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH); // Turn LED ON
+  delay(1000);                     // Wait for 1 second
+  digitalWrite(LED_BUILTIN, LOW);  // Turn LED OFF
+  delay(1000);    
+
+
+
+
+
+Ultrasonic Sensor
+#define echoPin 2   // Echo pin connected to digital pin 2
+#define trigPin 3   // Trigger pin connected to digital pin 3
+long duration;     // Duration of the sound wave travel
+int distance;      // Distance calculated
+void setup() {
+  pinMode(trigPin, OUTPUT);   // Set the trigger pin as OUTPUT
+  pinMode(echoPin, INPUT);    // Set the echo pin as INPUT
+  Serial.begin(9600);         // Start serial communication at 9600 baud
+  Serial.println("Ultrasonic Sensor HC-SR04 Test");
+  Serial.println("with Arduino UNO R3");
+}
+void loop() {
+  digitalWrite(trigPin, LOW);     // Clear trigger pin
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);    // Send 10us HIGH pulse to trigger
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH); // Read echo duration
+  distance = duration * 0.034 / 2;   // Calculate distance (cm)
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+  delay(500); // Wait half a second before the next measurement
 }
 
-class Course {
-  - title: String
-  - description: String
-  + enroll(): void
+
+VCC	5V on Arduino UNO
+GND	GND on Arduino UNO
+TRIG	Digital Pin D3
+ECHO	Digital Pin D2
+
+
+
+
+
+
+IR
+const int irSensorPin = 2; // IR Sensor Output connected to digital pin D2
+void setup() {
+  Serial.begin(9600);           // Initialize Serial communication at 9600 baud rate
+  pinMode(irSensorPin, INPUT);  // Set IR sensor pin as input
+}
+void loop() {
+  int sensorValue = digitalRead(irSensorPin);  // Read value from IR sensor
+  if (sensorValue == LOW) {
+    // Obstacle detected
+    Serial.println("Obstacle detected!");
+  } else {
+    // No obstacle detected
+    Serial.println("No obstacle detected.");
+  }
+  delay(500); // Add a small delay to avoid serial flooding
 }
 
-class Material {
-  - content: String
+
+IR Sensor Pin	Connect To
+VCC	5V on Arduino UNO
+GND	GND on Arduino UNO
+OUT	Digital Pin D2
+
+
+
+
+
+
+
+
+Blur tooth
+#include <SoftwareSerial.h>
+// Create software serial object to communicate with HC-05
+SoftwareSerial mySerial(3, 2); // HC-05 Tx & Rx are connected to Arduino pin 3 and 2
+void setup()
+{
+  // Begin serial communication with Arduino IDE (Serial Monitor)
+  Serial.begin(9600);
+  mySerial.begin(9600); // Begin serial communication with HC-05 module
+
+  // Initial message to inform about Bluetooth pairing
+  Serial.println("Initializing...");
+  Serial.println("The device started, now you can pair it with Bluetooth!");
+}
+void loop()
+{
+  // Check if data is available on the Serial Monitor (from your computer)
+  if (Serial.available())
+  {
+    mySerial.write(Serial.read()); // Forward what Serial received to Software Serial Port
+  }
+  // Check if data is available from the HC-05 (Bluetooth)
+  if (mySerial.available())
+  {
+    Serial.write(mySerial.read()); // Forward what Software Serial received to Serial Port
+  }
+  delay(20); // Small delay for stability
 }
 
-class Quiz {
-  - questions: List
+
+VCC → 5V on Arduino
+GND → GND on Arduino
+TXD (HC-05) → Pin 2 (RX) on Arduino
+RXD (HC-05) → Pin 3 (TX) on Arduino
+
+
+
+
+
+
+Zigbee
+#include <SoftwareSerial.h>
+// Create a software serial object for Zigbee communication (RX on pin 2, TX on pin 3)
+SoftwareSerial zigbeeSerial(2, 3);
+void setup() {
+  // Initialize the Hardware Serial interface for communication with the Serial Monitor
+  Serial.begin(9600); // Use 9600 baud rate for Serial Monitor
+  // Initialize the Software Serial interface for the Zigbee module
+  zigbeeSerial.begin(9600); // Use the same baud rate as the Zigbee module
+}
+void loop() {
+  // Check if data is available from Zigbee module
+  if (zigbeeSerial.available()) {
+    char receivedChar = zigbeeSerial.read(); // Read the received character
+    Serial.print("Received: ");
+    Serial.println(receivedChar); // Print the received character to Serial Monitor
+  }
+  // Send a message to the Zigbee module
+  zigbeeSerial.print("Hello, Zigbee!"); // Send a string to Zigbee module
+  delay(1000); // Delay to control the message transmission rate (1 second)
 }
 
-class Result {
-  - score: int
-  - feedback: String
+
+VCC → 5V (Arduino)
+GND → GND (Arduino)
+TX (Zigbee) → Pin 2 (RX) (Arduino)
+RX (Zigbee) → Pin 3 (TX) (Arduino)
+
+
+
+
+
+
+
+esp
+#define BLYNK_PRINT Serial
+// Fill in information from your Blynk device
+#define BLYNK_TEMPLATE_ID "TMPL3-1h2bOTe"
+#define BLYNK_TEMPLATE_NAME "mech demo 1"
+#define BLYNK_AUTH_TOKEN "hVbDSFSCLCZPqGERPFAnxGYGvrgDJPiC"
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <BlynkSimpleEsp32.h>
+// WiFi credentials
+char ssid[] = "Jessie"; // Your WiFi SSID
+char pass[] = "";       // Your WiFi password
+const int ledPin = 2; // LED pin for ESP32
+// Function to handle button press on Blynk app
+BLYNK_WRITE(V0) { // V0 is the virtual pin for the button
+  int pinValue = param.asInt(); // Get the state of the button
+  digitalWrite(ledPin, pinValue); // Set the LED state accordingly
+}
+void setup() {
+  Serial.begin(9600);   // Start serial communication at 9600 baud
+  pinMode(ledPin, OUTPUT); // Set the LED pin as output
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass); // Connect to Blynk server
+}
+void loop() {
+  Blynk.run(); // Keep the Blynk app running
 }
 
-User <|-- Learner
-User <|-- Admin
 
-Learner "1" --> "0..*" Course
-Course "1" --> "0..*" Material
-Course "1" --> "0..*" Quiz
-Quiz "1" --> "1" Result
 
-@enduml
 
-               +-------------+
-               |    User     |
-               +-------------+
-               | -username   |
-               | -password   |
-               +-------------+
-               | +login()    |
-               +-------------+
-                 /       \
-         +---------+   +--------+
-         | Learner |   | Admin  |
-         +---------+   +--------+
-         | +enroll()|   |+manageCourse()|
-         +---------+   +--------+
 
-         +---------+
-         | Course  |
-         +---------+
-         | -title  |
-         | -desc   |
-         +---------+
-         | +enroll()|
-         +---------+
-             / \
-        +--------+    +------+
-        | Quiz   |    |Material|
-        +--------+    +------+
-        |questions|   |content|
-        +--------+    +------+
 
-         +--------+
-         | Result |
-         +--------+
-         | score  |
-         | feedback|
-         +--------+
+Raspberry
+import RPi.GPIO as GPIO
+import time
+# Pin Configuration
+LED_PIN = 17  # GPIO17 (Pin 11)
+# Setup
+GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
+GPIO.setup(LED_PIN, GPIO.OUT)
+try:
+    while True:
+        GPIO.output(LED_PIN, GPIO.HIGH)  # Turn ON LED
+        time.sleep(1)  # Wait 1 second
+        GPIO.output(LED_PIN, GPIO.LOW)   # Turn OFF LED
+        time.sleep(1)  # Wait 1 second
+except KeyboardInterrupt:
+    GPIO.cleanup()  # Cleanup GPIO on Ctrl+C exit
+
+
+sudo apt-get install python3-rpi.gpio
+
+python3 blink_led.py
+
+
+Positive leg (longer) of the LED : GPIO 17 (Pin 11) 
+Negative leg (shorter) :  330Ω resistor
 
 
 
 
 
 
-sequence 
-User        Application         Database
- |               |                 |
- |---UserId()--->|                 |
- |               |--SaveId()----->|
- |               |<--Confirm------|
- |---Dashboard()->                 |
- |               |--PersonalData->|
- |               |<--ReturnData---|
- |---MyLearning()->                |
- |               |--GameEssentials|
- |               |<--Essentials---|
- |---SelectDomain()->              |
- |---GameStart()--->              |
- |---UserInputs()--->             |
- |               |--SaveInputs-->|
- |               |--UpdateDash-->|
- |               |<--ReturnResult|
+
+import RPi.GPIO as GPIO
+import time
+# Pin Configuration
+IR_SENSOR_PIN = 18  # GPIO pin where IR sensor is connected
+# Setup
+GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
+GPIO.setup(IR_SENSOR_PIN, GPIO.IN)  # Set IR sensor pin as input
+try:
+    while True:
+        if GPIO.input(IR_SENSOR_PIN) == 0:  # If sensor detects an obstacle
+            print("Obstacle Detected!")
+        else:
+            print("No Obstacle")
+        time.sleep(0.5)  # Small delay for stability
+except KeyboardInterrupt:
+    GPIO.cleanup()  # Cleanup GPIO on Ctrl+C exit
 
 
-@startuml
-actor User
-participant Application
-database Database
-
-User -> Application : UserId()
-Application -> Database : SaveId()
-Database --> Application : Confirm
-
-User -> Application : Dashboard()
-Application -> Database : PersonalData()
-Database --> Application : ReturnData
-
-User -> Application : MyLearning()
-Application -> Database : GameEssentials()
-Database --> Application : Essentials
-
-User -> Application : SelectDomain()
-User -> Application : GameStart()
-User -> Application : UserInputs()
-Application -> Database : SaveInputs()
-Application -> Database : UpdateDashboard()
-Database --> Application : ReturnResult
-
-@endum
-
-
-
-
-
-
-collaboration diagram 
-User → HomeLogin : UserInput
-HomeLogin → Dashboard : 2StepVerification
-HomeLogin → User : ReturnStatus
-User → MyLearning : AccessLearning
-MyLearning → Database : GameEssentials
-MyLearning → Domain : GetDetails
-Domain → Next : MoreToNextActivity
-
-@startuml
-object User
-object HomeLogin
-object Dashboard
-object MyLearning
-object Domain
-object Database
-
-User -> HomeLogin : UserInput
-HomeLogin -> Dashboard : 2StepVerification
-HomeLogin -> User : ReturnStatus
-User -> MyLearning : AccessLearning
-MyLearning -> Database : GameEssentials
-MyLearning -> Domain : GetDetails
-Domain -> User : MoreToNextActivity
-@enduml
-
-
-
-
-
-
-statechart diagram 
-[Initial] → Idle
-Idle → Active : Login
-Active → Browsing Courses
-Browsing Courses → Learning : Select Course
-Learning → Taking Quiz
-Taking Quiz → Processing Results
-Processing Results → Passed / Failed
-Passed → Return to Dashboard
-Failed → Retry Quiz
-Return to Dashboard → Logout
-Logout → [Final]
-
-@startuml
-[*] --> Idle
-Idle --> Active : Login
-Active --> Browsing_Courses
-Browsing_Courses --> Learning : Select Course
-Learning --> Taking_Quiz
-Taking_Quiz --> Processing_Results
-Processing_Results --> Passed : Score >= pass
-Processing_Results --> Failed : Score < pass
-Passed --> Return_to_Dashboard
-Failed --> Retry_Quiz
-Return_to_Dashboard --> Logout
-Logout --> [*]
-@enduml
+VCC to 5V on the Raspberry Pi.
+GND to GND on the Raspberry Pi.
+OUT to GPIO 18 (Pin 12).
 
 
 
@@ -653,43 +556,42 @@ Logout --> [*]
 
 
 
-Activity diagram
-[Start]
-  |
-Login
-  |
-Browse Courses
-  |
-Add Course
-  |
-Start Learning
-  |
-Take Quiz
-  |
-[Decision: Pass/Fail?]
-   /         \
- Pass         Fail
-  |            |
-Dashboard     Retry Quiz
-  |
-Logout
-  |
-[End]
+Adrino
+void setup() {
+  Serial.begin(9600); // Set baud rate to 9600
+}
+void loop() {
+  Serial.println("Hello from Arduino!"); // Send message every second
+  delay(1000); // Wait 1 second
+}
 
-@startuml
-start
-:Login;
-:Browse Courses;
-:Add Course;
-:Start Learning;
-:Take Quiz;
 
-if (Pass Quiz?) then (Yes)
-  :Go to Dashboard;
-else (No)
-  :Retry Quiz;
-endif
+Raspberry
+import serial.tools.list_ports
+ports = serial.tools.list_ports.comports()
+for port in ports:
+    print(port.device, port.description)
 
-:Logout;
-stop
-@enduml
+
+import serial
+import time
+# Replace '/dev/ttyUSB0' with your actual Arduino serial port
+ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+time.sleep(2)  # Wait for the connection to establish
+
+while True:
+    data = ser.readline().decode('utf-8').strip()  # Read and decode data
+    if data:
+        print("Received from Arduino:", data)
+
+
+
+
+
+
+
+
+
+
+
+
