@@ -17,14 +17,16 @@ DIV AB           ; Divide A by B
 ; Result: A = Quotient, B = Remainder
 
 
+
+
+
+
+
+
+
 MOV A, #0F0H     ; A = 11110000
 ANL A, #0AAH     ; AND with 10101010
 ; Result: A = 10100000
-
-
-
-
-
 
 MOV A, #0F0H     ; A = 11110000
 ORL A, #0AAH     ; OR with 10101010
